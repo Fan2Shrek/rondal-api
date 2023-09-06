@@ -28,6 +28,12 @@ class Provider
     #[ORM\Column(length: 255)]
     private string $url;
 
+    public function __construct(string $name, string $url)
+    {
+        $this->name = $name;
+        $this->url = $url;
+    }
+
     public function getId(): ?int
     {
         return $this->id ?? null;

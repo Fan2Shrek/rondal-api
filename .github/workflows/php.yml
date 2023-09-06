@@ -1,0 +1,32 @@
+name: PHP Stan
+
+on: [push]
+
+permissions:
+  contents: read
+
+resources:
+  repositories:
+    - repository: https://github.com/BatMaxou/boing
+      type: git
+      name: boing
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    
+    services:
+      db:
+        image: mariadb:10.3
+        env:
+          MYSQL_ROOT_PASSWORD: root
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Vendor install
+        run: composer install --no-scripts
+      
+      - name: Phpstan
+        run: make phpstan
