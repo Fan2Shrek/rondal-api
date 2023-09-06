@@ -1,0 +1,10 @@
+{
+    "$schema": "/home/pierre/.vscode-server/data/User/globalStorage/dantleech.vscode-phpactor/phpactor/phpactor.schema.json",
+    "symfony.enabled": false,
+    "indexer.exclude_patterns": [
+        "/vendor/**/Tests/**/*",
+        "/vendor/**/tests/**/*",
+        "/var/cache/**/*",
+        "/vendor/composer/**/*"
+    ]
+}
