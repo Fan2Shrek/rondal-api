@@ -2,9 +2,29 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use App\Domain\Command\Product\ProductActivateCommand;
+use App\Domain\Command\Product\ProductDesactivateCommand;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ApiResource(operations: [
+    new GetCollection(),
+    new Post(
+        '/product/{id}/activate',
+        messenger: 'input',
+        input: ProductActivateCommand::class,
+        output: false,
+    ),
+    new Post(
+        '/product/{id}/desactivate',
+        messenger: 'input',
+        input: ProductDesactivateCommand::class,
+        output: false,
+    ),
+])]
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
