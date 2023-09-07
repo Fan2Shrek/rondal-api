@@ -5,12 +5,6 @@ on: [push]
 permissions:
   contents: read
 
-resources:
-  repositories:
-    - repository: https://github.com/BatMaxou/boing
-      type: git
-      name: boing
-
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -27,6 +21,9 @@ jobs:
 
       - name: Vendor install
         run: composer install --no-scripts
-      
+
+      - name: Setup docker
+        run: docker-compose up -d
+
       - name: Phpstan
-        run: make phpstan
+        run: docker-compose exec php php vendor/bin/phpstan analyse src --configuration=phpstan.neon
