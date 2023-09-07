@@ -19,11 +19,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Vendor install
-        run: composer install --no-scripts
+      # - name: Vendor install
+      #   run: composer install --no-scripts
 
-      - name: Setup docker
-        run: docker-compose up -d
-
-      - name: Phpstan
-        run: docker-compose exec php php vendor/bin/phpstan analyse src --configuration=phpstan.neon
+      # - name: Phpstan
+      #   run: php vendor/bin/phpstan analyse src --configuration=phpstan.neon

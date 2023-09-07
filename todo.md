@@ -12,3 +12,5 @@
 ## OTHER
 
 - View website's url
+- List
+- Pipeline :(
