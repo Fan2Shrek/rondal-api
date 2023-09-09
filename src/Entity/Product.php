@@ -42,6 +42,12 @@ class Product
     #[ORM\Column]
     private bool $active;
 
+    /**
+     * @var array<string, string>
+     */
+    #[ORM\Column]
+    private array $data = [];
+
     public function __construct(string $name, string $originalName)
     {
         $this->name = $name;
@@ -88,5 +94,34 @@ class Product
         $this->active = $active;
 
         return $this;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getData(): array
+    {
+        return $this->data;
+    }
+
+    public function addData(string $key, string $value): static
+    {
+        $this->data[$key] = $value;
+
+        return $this;
+    }
+
+    public function has(string $key): bool
+    {
+        return \array_key_exists($key, $this->data);
+    }
+
+    public function get(string $key): ?string
+    {
+        if ($this->has($key)) {
+            return $this->data[$key];
+        }
+
+        return null;
     }
 }
