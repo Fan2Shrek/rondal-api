@@ -20,14 +20,15 @@ class ProviderAdapter
     #[ORM\Column(length: 255)]
     private string $urlSchema;
 
+    public function __construct(Provider $provider, string $urlSchema)
+    {
+        $this->provider =  $provider;
+        $this->urlSchema =  $urlSchema;
+    }
+
     public function getId(): ?int
     {
         return $this->id ?? null;
-    }
-
-    public function __construct(Provider $provider)
-    {
-        $this->provider = $provider;
     }
 
     public function getProvider(): Provider

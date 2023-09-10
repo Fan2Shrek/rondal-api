@@ -21,6 +21,14 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    public function getAllActiveProduct(): array
+    {
+        return $this->createQueryBuilder('product')
+            ->where('product.active = 1')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function save(Product $entity, bool $flush = false)
     {
         $this->_em->persist($entity);
