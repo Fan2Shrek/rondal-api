@@ -30,8 +30,6 @@ class PriceProvider
             $allPrices[$providerAdapter->getProvider()->getName()] = $this->priceFinder->findByReponse($this->providerCaller->call($url));
         }
 
-        dd($allPrices);
-
         return $allPrices;
     }
 }

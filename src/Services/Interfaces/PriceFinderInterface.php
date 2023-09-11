@@ -2,6 +2,7 @@
 
 namespace App\Services\Interfaces;
 
+use App\Services\Exception\PriceNotFoundException;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 interface PriceFinderInterface
