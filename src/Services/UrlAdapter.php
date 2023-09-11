@@ -69,7 +69,7 @@ class UrlAdapter implements UrlAdapterInterface
                 $arg = \str_replace('|', $this->currentProvider->getName(), $method);
                 $arg = \str_replace('get', '', $arg);
 
-                $target = $target->get($arg);
+                $target = $target->get(strtolower($arg));
             }
         }
 
