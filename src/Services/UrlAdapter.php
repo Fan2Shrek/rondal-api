@@ -12,6 +12,7 @@ class UrlAdapter implements UrlAdapterInterface
     private const SCHEMA_FORMAT = [
         'product' => 'originalName',
         'id' => '|-id',
+        'name' => '|-name'
     ];
 
     private ?Provider $currentProvider = null;
@@ -23,6 +24,7 @@ class UrlAdapter implements UrlAdapterInterface
         $baseUrl = $this->adapt($providerAdapter);
         $url = $this->formatString($baseUrl, $product);
 
+        dd($url);
         return $url;
     }
 
@@ -33,16 +35,14 @@ class UrlAdapter implements UrlAdapterInterface
 
     private function formatString(string $url, object $object): string
     {
-        $convertedString = '';
         $toReplace = [];
 
         preg_match_all('/{(([a-zA-Z0-9]|-)*)}/', $url, $matches);
         foreach ($matches[1] as $convert) {
             $toReplace["{" . $convert . "}"] = $this->get(self::SCHEMA_FORMAT[$convert], $object);
         }
-        dd($toReplace);
 
-        return $convertedString;
+        return strtr($url, $toReplace);
     }
 
     /**
@@ -67,6 +67,7 @@ class UrlAdapter implements UrlAdapterInterface
             }
 
             $arg = \str_replace('|', $this->currentProvider->getName(), $method);
+            $arg = \str_replace('get', '', $arg);
             $target = $target->get($arg);
         }
 
