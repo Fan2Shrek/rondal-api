@@ -5,8 +5,6 @@ namespace App\DataFixtures;
 use App\Entity\Product;
 use App\Entity\Provider;
 use App\Entity\ProviderAdapter;
-use App\Tests\Factory\ProductFactory;
-use App\Tests\Factory\ProviderFactory;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
@@ -22,7 +20,7 @@ class AppFixtures extends Fixture
 
         $ketchup = new Product('ketchup', 'ketchup');
         $ketchup->addData('franprix-id', 99073109);
-        $ketchup->addData('franprix-name', "ketchup-flacon-top-down");
+        $ketchup->addData('franprix-name', 'ketchup-flacon-top-down');
         $manager->persist($ketchup);
 
         $manager->flush();

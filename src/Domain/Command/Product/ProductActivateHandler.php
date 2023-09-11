@@ -13,10 +13,10 @@ class ProductActivateHandler
     ) {
     }
 
-    public function __invoke(ProductActivateCommand $command)
+    public function __invoke(ProductActivateCommand $command): void
     {
         $product = $command->getCurrentResource();
-        $product->setActive(1);
+        $product->setActive(true);
 
         $this->productRepository->save($product, true);
     }

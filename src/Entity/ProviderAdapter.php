@@ -22,8 +22,8 @@ class ProviderAdapter
 
     public function __construct(Provider $provider, string $urlSchema)
     {
-        $this->provider =  $provider;
-        $this->urlSchema =  $urlSchema;
+        $this->provider = $provider;
+        $this->urlSchema = $urlSchema;
     }
 
     public function getId(): ?int

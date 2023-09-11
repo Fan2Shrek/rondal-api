@@ -3,6 +3,7 @@
 namespace App\Services\Provider;
 
 use App\Entity\Product;
+use App\Entity\Provider;
 use App\Repository\ProviderAdapterRepository;
 use App\Services\Interfaces\UrlAdapterInterface;
 
@@ -14,12 +15,15 @@ class PriceProvider
     ) {
     }
 
+    /** 
+     * @return array<string, int> 
+     */
     public function getPriceFromProduct(Product $product): array
     {
         foreach ($this->providerAdapterRepository->findAll() as $providerAdapter) {
             dd($this->urlAdapter->adaptFullUrl($providerAdapter, $product));
         }
 
-        return [0];
+        return [];
     }
 }

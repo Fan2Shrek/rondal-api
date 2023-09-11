@@ -15,7 +15,7 @@ class RefreshProductPriceHandler
     ) {
     }
 
-    public function __invoke(RefreshProductPriceCommand $command)
+    public function __invoke(RefreshProductPriceCommand $command): void
     {
         $allPrices = [];
 

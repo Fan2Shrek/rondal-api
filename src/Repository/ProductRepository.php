@@ -21,6 +21,9 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    /**
+     * @return Product[] 
+     */
     public function getAllActiveProduct(): array
     {
         return $this->createQueryBuilder('product')
@@ -29,7 +32,7 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function save(Product $entity, bool $flush = false)
+    public function save(Product $entity, bool $flush = false): void
     {
         $this->_em->persist($entity);
 

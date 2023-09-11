@@ -6,6 +6,7 @@ parameters:
     symfony:
         console_application_loader: tests/console-application.php
         constant_hassers: false
+        
     paths:
         - src/
         - tests/

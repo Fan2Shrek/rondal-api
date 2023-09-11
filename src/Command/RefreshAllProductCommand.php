@@ -20,7 +20,7 @@ class RefreshAllProductCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->bus->dispatch(new RefreshProductPriceCommand);
+        $this->bus->dispatch(new RefreshProductPriceCommand());
 
         return Command::SUCCESS;
     }
