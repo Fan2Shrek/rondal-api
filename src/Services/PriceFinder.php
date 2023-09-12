@@ -16,9 +16,9 @@ class PriceFinder implements PriceFinderInterface
             throw new PriceNotFoundException(sprintf("Price was not found in the %s request", $response->getInfo()['url']));
         }
 
-        \preg_match('/<[^>]*>\s*([\d,.]+)\s*€\s*<[^>]*>/', $content, $matches);
+        \preg_match('/<[^>]*>([0-9(.|,)]+)\s*(€|$)<\/[^>]*>/', $content, $matches);
 
-        dump($matches[0]);
+        dump($matches);
 
         return 1;
     }

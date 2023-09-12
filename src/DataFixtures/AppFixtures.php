@@ -12,6 +12,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        // Franprix
         $franprix = new Provider('Franprix', 'https://www.franprix.fr');
         $manager->persist($franprix);
 
@@ -22,14 +23,25 @@ class AppFixtures extends Fixture
         $ketchup->addData('franprix-id', 99073109);
         $ketchup->addData('franprix-name', 'ketchup-flacon-top-down');
 
-        $auchan = new Provider('Auchan', 'https://www.auchan.fr/');
-        $manager->persist($auchan);
+        //Auchan
+        // $auchan = new Provider('Auchan', 'https://www.auchan.fr/');
+        // $manager->persist($auchan);
 
-        $adapter = new ProviderAdapter($auchan, '{name}/pr-{id}');
+        // $adapter = new ProviderAdapter($auchan, '{name}/pr-{id}');
+        // $manager->persist($adapter);
+
+        // $ketchup->addData('auchan-id', 'C1235750');
+        // $ketchup->addData('auchan-name', 'heinz-tomato-ketchup-flacon-souple');
+
+        //Leclrec
+        $leclerc = new Provider('Leclerc', 'https://www.e.leclerc/');
+        $manager->persist($leclerc);
+
+        $adapter = new ProviderAdapter($leclerc, 'mag/e-leclerc-pont-sainte-maxence?code={id}');
         $manager->persist($adapter);
 
-        $ketchup->addData('auchan-id', 'C1235750');
-        $ketchup->addData('auchan-name', 'heinz-tomato-ketchup-flacon-souple');
+        $ketchup->addData('leclerc-id', "23G307G");
+
         $manager->persist($ketchup);
 
         $manager->flush();
