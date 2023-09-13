@@ -8,7 +8,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class PriceFinder implements PriceFinderInterface
 {
-    public function findByReponse(ResponseInterface $response): string
+    public function findByReponse(ResponseInterface $response): float
     {
         $content = $response->getContent();
 
@@ -25,6 +25,6 @@ class PriceFinder implements PriceFinderInterface
 
         \preg_match('/<[^>]*>([0-9(.|,)]+)\s*(€|$)<\/[^>]*>/', $content, $matches);
 
-        return $matches[1];
+        return \str_replace(',', '.', $matches[1]);
     }
 }

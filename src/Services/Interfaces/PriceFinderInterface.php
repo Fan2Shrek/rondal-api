@@ -12,5 +12,5 @@ interface PriceFinderInterface
      *
      * @throws PriceNotFoundException
      */
-    public function findByReponse(ResponseInterface $responseInterface): string;
+    public function findByReponse(ResponseInterface $responseInterface): float;
 }
