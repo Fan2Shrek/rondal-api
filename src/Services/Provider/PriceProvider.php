@@ -18,8 +18,8 @@ class PriceProvider
     ) {
     }
 
-    /** 
-     * @return array<string, int> 
+    /**
+     * @return array<string, string>
      */
     public function getPriceFromProduct(Product $product): array
     {

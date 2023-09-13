@@ -8,18 +8,23 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class PriceFinder implements PriceFinderInterface
 {
-    public function findByReponse(ResponseInterface $response): int
+    public function findByReponse(ResponseInterface $response): string
     {
         $content = $response->getContent();
 
         if (!str_contains($content, '€')) {
-            throw new PriceNotFoundException(sprintf("Price was not found in the %s request", $response->getInfo()['url']));
+            /**
+             * @var array{
+             *  url: string
+             * }
+             */
+            $info = $response->getInfo();
+
+            throw new PriceNotFoundException(sprintf('Price was not found in the %s request', $info['url']));
         }
 
         \preg_match('/<[^>]*>([0-9(.|,)]+)\s*(€|$)<\/[^>]*>/', $content, $matches);
 
-        dump($matches);
-
-        return 1;
+        return $matches[1];
     }
 }

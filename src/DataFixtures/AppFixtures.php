@@ -23,7 +23,7 @@ class AppFixtures extends Fixture
         $ketchup->addData('franprix-id', 99073109);
         $ketchup->addData('franprix-name', 'ketchup-flacon-top-down');
 
-        //Auchan
+        // Auchan
         // $auchan = new Provider('Auchan', 'https://www.auchan.fr/');
         // $manager->persist($auchan);
 
@@ -33,14 +33,28 @@ class AppFixtures extends Fixture
         // $ketchup->addData('auchan-id', 'C1235750');
         // $ketchup->addData('auchan-name', 'heinz-tomato-ketchup-flacon-souple');
 
-        //Leclrec
-        $leclerc = new Provider('Leclerc', 'https://www.e.leclerc/');
-        $manager->persist($leclerc);
+        // //Leclrec
+        // $leclerc = new Provider('Leclerc', 'https://www.e.leclerc');
+        // $manager->persist($leclerc);
 
-        $adapter = new ProviderAdapter($leclerc, 'mag/e-leclerc-pont-sainte-maxence?code={id}');
+        // $adapter = new ProviderAdapter($leclerc, 'mag/e-leclerc-pont-sainte-maxence?code={id}');
+        // $manager->persist($adapter);
+
+        // $ketchup->addData('leclerc-id', "23G307G");
+
+        // $manager->persist($ketchup);
+
+        // $manager->flush();
+
+        // Monop
+        $monoprix = new Provider('Monoprix', 'https://www.monoprix.fr');
+        $manager->persist($monoprix);
+
+        $adapter = new ProviderAdapter($monoprix, '/courses/{name}-{id}-p');
         $manager->persist($adapter);
 
-        $ketchup->addData('leclerc-id', "23G307G");
+        $ketchup->addData('monoprix-id', 3266125);
+        $ketchup->addData('monoprix-name', 'tomato-ketchup-heinz');
 
         $manager->persist($ketchup);
 

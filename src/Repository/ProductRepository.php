@@ -22,7 +22,7 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Product[] 
+     * @return Product[]
      */
     public function getAllActiveProduct(): array
     {
