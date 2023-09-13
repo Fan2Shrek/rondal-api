@@ -29,7 +29,7 @@ class UrlAdapter implements UrlAdapterInterface
 
     public function adapt(ProviderAdapter $providerAdapter): string
     {
-        return $providerAdapter->getProvider()->getUrl().$providerAdapter->getUrlSchema();
+        return $providerAdapter->getProvider()->getUrl() . $providerAdapter->getUrlSchema();
     }
 
     private function formatString(string $url, object $object): string
@@ -38,7 +38,7 @@ class UrlAdapter implements UrlAdapterInterface
 
         preg_match_all('/{(([a-zA-Z0-9]|-)*)}/', $url, $matches);
         foreach ($matches[1] as $convert) {
-            $toReplace['{'.$convert.'}'] = $this->get(self::SCHEMA_FORMAT[$convert], $object);
+            $toReplace['{' . $convert . '}'] = $this->get(self::SCHEMA_FORMAT[$convert], $object);
         }
 
         return strtr($url, $toReplace);
@@ -50,7 +50,7 @@ class UrlAdapter implements UrlAdapterInterface
     private function transformToMethods(string $toTransform): iterable
     {
         foreach (explode('.', $toTransform) as $step) {
-            yield 'get'.ucfirst($step);
+            yield 'get' . ucfirst($step);
         }
     }
 
@@ -73,6 +73,6 @@ class UrlAdapter implements UrlAdapterInterface
             }
         }
 
-        return (string) $target;
+        return $target;
     }
 }

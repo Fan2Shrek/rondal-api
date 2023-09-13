@@ -7,6 +7,8 @@ use App\Repository\ProviderAdapterRepository;
 use App\Services\Interfaces\PriceFinderInterface;
 use App\Services\Interfaces\ProviderCallerInterface;
 use App\Services\Interfaces\UrlAdapterInterface;
+use App\Services\Redis\RedisConnection;
+use Symfony\Component\Cache\CacheItem;
 
 class PriceProvider
 {
@@ -15,6 +17,7 @@ class PriceProvider
         private readonly ProviderAdapterRepository $providerAdapterRepository,
         private readonly ProviderCallerInterface $providerCaller,
         private readonly PriceFinderInterface $priceFinder,
+        private readonly RedisConnection $connection,
     ) {
     }
 
@@ -31,5 +34,9 @@ class PriceProvider
         }
 
         return $allPrices;
+    }
+
+    private function checkInRedis(): ?CacheItem
+    {
     }
 }

@@ -17,11 +17,6 @@ class RefreshProductPriceHandler
 
     public function __invoke(RefreshProductPriceCommand $command): void
     {
-        $allPrices = [];
-
-        foreach ($this->productRepository->getAllActiveProduct() as $product) {
-            $allPrices[$product->getName()] = $this->priceProvider->getPriceFromProduct($product);
-            dd($allPrices);
-        }
+        dd($this->priceProvider->getPriceFromProduct($command->getProduct()));
     }
 }

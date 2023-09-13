@@ -11,6 +11,8 @@ services:
   php:
     build:
       context: ./.boing/docker/php
+      args:
+        ENABLE_REDIS: 1
     volumes:
       - .:/srv
 
@@ -21,6 +23,9 @@ services:
       context: ./.boing/docker/nginx
     volumes:
       - ./public:/srv/public
+
+  redis:
+    image: redis:7
 
 volumes:
   db_data:
