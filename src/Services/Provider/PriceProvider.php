@@ -26,6 +26,8 @@ class PriceProvider
      */
     public function getPriceFromProduct(Product $product): array
     {
+        $this->checkInRedis($product);
+        die();
         $allPrices = [];
 
         foreach ($this->providerAdapterRepository->findAll() as $providerAdapter) {
@@ -36,7 +38,10 @@ class PriceProvider
         return $allPrices;
     }
 
-    private function checkInRedis(): ?CacheItem
+    private function checkInRedis($product)
     {
+        $redis = $this->connection->getConnection();
+
+        $redis->set('s', \serialize($product));
     }
 }
