@@ -25,6 +25,6 @@ class PriceFinder implements PriceFinderInterface
 
         \preg_match('/<[^>]*>([0-9(.|,)]+)\s*(€|$)<\/[^>]*>/', $content, $matches);
 
-        return \str_replace(',', '.', $matches[1]);
+        return (float) \str_replace(',', '.', $matches[1]);
     }
 }
