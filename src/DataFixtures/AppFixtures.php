@@ -58,6 +58,15 @@ class AppFixtures extends Fixture
 
         $manager->persist($ketchup);
 
+        $mayo = new Product('mayonnaise', 'mayonnaise');
+        $mayo->addData('franprix-name', 'mayonnaise-de-dijon-flacon-top-down')
+            ->addData('franprix-id', 99034507)
+
+            ->addData('monoprix-name', 'mayonnaise-de-dijon-amora')
+            ->addData('monoprix-id', 3267619);
+
+        $manager->persist($mayo);
+
         $manager->flush();
     }
 }

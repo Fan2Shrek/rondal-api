@@ -3,12 +3,13 @@
 namespace App\Services\Provider;
 
 use App\Entity\Product;
+use App\Model\PriceInfo;
+use Psr\Cache\CacheItemInterface;
+use App\Services\Redis\RedisConnection;
 use App\Repository\ProviderAdapterRepository;
+use App\Services\Interfaces\UrlAdapterInterface;
 use App\Services\Interfaces\PriceFinderInterface;
 use App\Services\Interfaces\ProviderCallerInterface;
-use App\Services\Interfaces\UrlAdapterInterface;
-use App\Services\Redis\RedisConnection;
-use Symfony\Component\Cache\CacheItem;
 
 class PriceProvider
 {
@@ -21,27 +22,49 @@ class PriceProvider
     ) {
     }
 
-    /**
-     * @return array<string, float>
-     */
-    public function getPriceFromProduct(Product $product): array
+    public function getPriceFromProduct(Product $product): PriceInfo
     {
-        $this->checkInRedis($product);
-        die();
-        $allPrices = [];
+        $cache = $this->checkInRedis($product);
+
+        if ($cache->isHit()) {
+            /**
+             * @var PriceInfo
+             */
+            return $cache->get();
+        }
+
+        $priceInfo = $this->refreshPrice($product);
+
+        $cache->set($priceInfo)
+            ->expiresAfter(846000);
+
+        /**
+         * @phpstan-ignore-next-line
+         */
+        $this->connection->save($cache);
+
+        return $priceInfo;
+    }
+
+    private function refreshPrice(Product $product): PriceInfo
+    {
+        $priceInfo = new PriceInfo($product);
 
         foreach ($this->providerAdapterRepository->findAll() as $providerAdapter) {
             $url = $this->urlAdapter->adaptFullUrl($providerAdapter, $product);
-            $allPrices[$providerAdapter->getProvider()->getName()] = $this->priceFinder->findByReponse($this->providerCaller->call($url));
+            $priceInfo->addPrice($providerAdapter->getProvider()->getName(), $this->priceFinder->findByReponse($this->providerCaller->call($url)));
         }
 
-        return $allPrices;
+        return $priceInfo;
     }
 
-    private function checkInRedis($product)
+    private function checkInRedis(Product $product): CacheItemInterface
     {
-        $redis = $this->connection->getConnection();
+        $key = "product-{$product->getId()}";
 
-        $redis->set('s', \serialize($product));
+        /**
+         * @phpstan-ignore-next-line
+         */
+        return $this->connection->getItem(sha1($key));
     }
 }

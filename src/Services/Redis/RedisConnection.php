@@ -6,19 +6,35 @@ use Symfony\Component\Cache\Adapter\RedisAdapter;
 
 class RedisConnection
 {
-    private ?\Redis $connection = null;
+    private ?RedisAdapter $connection = null;
 
-    private function connect(): void
+    public function __construct(private string $dsn)
     {
-        $this->connection = RedisAdapter::createConnection('redis://redis:6379');
     }
 
-    public function getConnection(): \Redis
+    private function connect(): RedisAdapter
+    {
+        $redis = RedisAdapter::createConnection($this->dsn);
+
+        return new RedisAdapter($redis);
+    }
+
+    public function getConnection(): RedisAdapter
     {
         if (null === $this->connection) {
-            $this->connect();
+            $this->connection = $this->connect();
         }
 
         return $this->connection;
+    }
+
+    /**
+     * Call the function to the redis connection.
+     * 
+     * @param mixed[] $arguments
+     */
+    public function __call(string $name, array $arguments): mixed
+    {
+        return $this->getConnection()->$name(...$arguments);
     }
 }

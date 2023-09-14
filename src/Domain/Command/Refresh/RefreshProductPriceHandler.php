@@ -11,12 +11,11 @@ class RefreshProductPriceHandler
 {
     public function __construct(
         private readonly PriceProvider $priceProvider,
-        private readonly ProductRepository $productRepository
     ) {
     }
 
     public function __invoke(RefreshProductPriceCommand $command): void
     {
-        dd($this->priceProvider->getPriceFromProduct($command->getProduct()));
+        $this->priceProvider->getPriceFromProduct($command->getProduct());
     }
 }
