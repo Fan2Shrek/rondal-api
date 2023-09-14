@@ -13,6 +13,7 @@ services:
       context: ./.boing/docker/php
       args:
         ENABLE_REDIS: 1
+        ENABLE_AMQP: 1
     volumes:
       - .:/srv
 
@@ -29,6 +30,16 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.12.4-management
+
+  consumer1:
+    build:
+      context: ./.boing/docker/php
+      args:
+        ENABLE_REDIS: 1
+        ENABLE_AMQP: 1
+    volumes:
+      - .:/srv
+    command: "php -d memory_limit=-1 bin/console messenger:consume async"
 
 volumes:
   db_data:
