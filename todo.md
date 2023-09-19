@@ -2,12 +2,11 @@
 
 ## DOCKER
 
-- Add redis
-- Add rabbitMQ -> async message
+- nothing :thumbsUp:
 
 ## Symfony
 
-- Interface for provider (ProductTransformer ?)
+- nothing :thumbsUp:
 
 ## OTHER
 
