@@ -6,12 +6,14 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\ProviderRepository;
 
 #[ApiResource(
     operations: [
         new Get(),
         new Post(),
+        new GetCollection(),
     ]
 )]
 #[ORM\Entity(repositoryClass: ProviderRepository::class)]
