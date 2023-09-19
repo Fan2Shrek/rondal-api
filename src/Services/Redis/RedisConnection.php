@@ -30,7 +30,7 @@ class RedisConnection
 
     /**
      * Call the function to the redis connection.
-     * 
+     *
      * @param mixed[] $arguments
      */
     public function __call(string $name, array $arguments): mixed

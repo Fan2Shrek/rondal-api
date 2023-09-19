@@ -13,7 +13,7 @@ framework:
         routing:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
-            'App\Domain\Command\Refresh\RefreshProductPriceCommand': async
+            # 'App\Domain\Command\Refresh\RefreshProductPriceCommand': async
 
 # when@test:
 #    framework:

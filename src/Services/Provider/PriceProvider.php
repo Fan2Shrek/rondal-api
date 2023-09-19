@@ -36,9 +36,9 @@ class PriceProvider
         $priceInfo = $this->refreshPrice($product);
 
         $cache->set($priceInfo)
-            ->expiresAfter(846000);
+            ->expiresAfter(84600);
 
-        /**
+        /*
          * @phpstan-ignore-next-line
          */
         $this->connection->save($cache);
@@ -62,7 +62,7 @@ class PriceProvider
     {
         $key = "product-{$product->getId()}";
 
-        /**
+        /*
          * @phpstan-ignore-next-line
          */
         return $this->connection->getItem(sha1($key));

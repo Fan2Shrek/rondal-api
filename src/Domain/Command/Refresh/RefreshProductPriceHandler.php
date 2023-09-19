@@ -2,7 +2,6 @@
 
 namespace App\Domain\Command\Refresh;
 
-use App\Repository\ProductRepository;
 use App\Services\Provider\PriceProvider;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

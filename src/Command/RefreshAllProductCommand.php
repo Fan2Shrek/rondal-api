@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Repository\ProductRepository;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -22,7 +23,11 @@ class RefreshAllProductCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
+
         foreach ($this->productRepository->getAllActiveProduct() as $product) {
+            $io->section(sprintf('Asking for %s...', $product->getName()));
+
             $this->bus->dispatch(new RefreshProductPriceCommand($product));
         }
 
