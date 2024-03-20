@@ -14,6 +14,7 @@ services:
       args:
         ENABLE_REDIS: 1
         ENABLE_AMQP: 1
+        ENABLE_PCOV: 1
     volumes:
       - .:/srv
 
@@ -21,7 +22,7 @@ services:
     depends_on:
       - php
     build:
-      context: ./.boing/docker/nginx
+      context: ./.boing/docker/nginx/symfony
     volumes:
       - ./public:/srv/public
 
