@@ -1,31 +1,12 @@
 <?php
 
-namespace App\Tests\Factory;
+namespace App\Tests\Fixtures\Factory;
 
 use App\Entity\Provider;
-use App\Repository\ProviderRepository;
 use Zenstruck\Foundry\ModelFactory;
-use Zenstruck\Foundry\Proxy;
-use Zenstruck\Foundry\RepositoryProxy;
 
 /**
  * @extends ModelFactory<Provider>
- *
- * @method        Provider|Proxy                     create(array|callable $attributes = [])
- * @method static Provider|Proxy                     createOne(array $attributes = [])
- * @method static Provider|Proxy                     find(object|array|mixed $criteria)
- * @method static Provider|Proxy                     findOrCreate(array $attributes)
- * @method static Provider|Proxy                     first(string $sortedField = 'id')
- * @method static Provider|Proxy                     last(string $sortedField = 'id')
- * @method static Provider|Proxy                     random(array $attributes = [])
- * @method static Provider|Proxy                     randomOrCreate(array $attributes = [])
- * @method static ProviderRepository|RepositoryProxy repository()
- * @method static Provider[]|Proxy[]                 all()
- * @method static Provider[]|Proxy[]                 createMany(int $number, array|callable $attributes = [])
- * @method static Provider[]|Proxy[]                 createSequence(iterable|callable $sequence)
- * @method static Provider[]|Proxy[]                 findBy(array $attributes)
- * @method static Provider[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
- * @method static Provider[]|Proxy[]                 randomSet(int $number, array $attributes = [])
  */
 final class ProviderFactory extends ModelFactory
 {

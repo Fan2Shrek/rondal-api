@@ -26,3 +26,9 @@ jobs:
 
       - name: Phpstan
         run: make phpstan
+
+      - name: Prepare test
+        run: make pretests
+
+      - name: Phpunit
+        run: make phpunit

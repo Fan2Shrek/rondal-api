@@ -41,4 +41,12 @@ class CurrentResourceDenormalizer implements DenormalizerInterface, Denormalizer
             is_subclass_of($type, CurrentResourceAwareInterface::class)
             && false === ($context[self::ALREADY_CALLED] ?? false);
     }
+
+    /**
+     * @return string[]
+     */
+    public function getSupportedTypes(string|null $format): array
+    {
+        return [CurrentResourceAwareInterface::class];
+    }
 }
