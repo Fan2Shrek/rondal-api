@@ -2,25 +2,27 @@ name: PHP Stan
 
 on: [push]
 
-permissions:
-  contents: read
+env:
+  COMPOSE: docker-compose -f docker-compose.ci.yaml
 
 jobs:
   tests:
     runs-on: ubuntu-latest
     
-    services:
-      db:
-        image: mariadb:10.3
-        env:
-          MYSQL_ROOT_PASSWORD: root
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
 
-      # - name: Vendor install
-      #   run: composer install --no-scripts
+      - name: Pull db images
+        run: ${COMPOSE} pull db
 
-      # - name: Phpstan
-      #   run: php vendor/bin/phpstan analyse src --configuration=phpstan.neon
+      - name: Execute Docker-compose
+        run: ${COMPOSE} up -d db
+
+      - name: Vendor install
+        run: composer install --no-scripts
+
+      - name: Phpstan
+        run: make phpstan

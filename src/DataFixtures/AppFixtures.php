@@ -47,14 +47,14 @@ class AppFixtures extends Fixture
         // $manager->flush();
 
         // Monop
-        $monoprix = new Provider('Monoprix', 'https://www.monoprix.fr');
-        $manager->persist($monoprix);
+        // $monoprix = new Provider('Monoprix', 'https://www.monoprix.fr');
+        // $manager->persist($monoprix);
 
-        $adapter = new ProviderAdapter($monoprix, '/courses/{name}-{id}-p');
-        $manager->persist($adapter);
+        // $adapter = new ProviderAdapter($monoprix, '/courses/{name}-{id}-p');
+        // $manager->persist($adapter);
 
-        $ketchup->addData('monoprix-id', 3266125);
-        $ketchup->addData('monoprix-name', 'tomato-ketchup-heinz');
+        // $ketchup->addData('monoprix-id', 3266125);
+        // $ketchup->addData('monoprix-name', 'tomato-ketchup-heinz');
 
         $manager->persist($ketchup);
 
