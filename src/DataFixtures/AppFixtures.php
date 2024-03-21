@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Data\ProductData;
 use App\Entity\Product;
 use App\Entity\Provider;
 use App\Entity\ProviderAdapter;
@@ -20,8 +21,10 @@ class AppFixtures extends Fixture
         $manager->persist($adapter);
 
         $ketchup = new Product('Ketchup', 'ketchup');
-        $ketchup->addData('franprix-id', 99073109);
-        $ketchup->addData('franprix-name', 'ketchup-flacon-top-down');
+
+        $data = new ProductData($ketchup);
+        $data->getInformations()->set('franprix-id', 99073109);
+        $data->getInformations()->set('franprix-name', 'ketchup-flacon-top-down');
 
         // Auchan
         // $auchan = new Provider('Auchan', 'https://www.auchan.fr/');
@@ -56,16 +59,17 @@ class AppFixtures extends Fixture
         // $ketchup->addData('monoprix-id', 3266125);
         // $ketchup->addData('monoprix-name', 'tomato-ketchup-heinz');
 
+        $manager->persist($data);
         $manager->persist($ketchup);
 
-        $mayo = new Product('mayonnaise', 'mayonnaise');
-        $mayo->addData('franprix-name', 'mayonnaise-de-dijon-flacon-top-down')
-            ->addData('franprix-id', 99034507)
+        // $mayo = new Product('mayonnaise', 'mayonnaise');
+        // $mayo->addData('franprix-name', 'mayonnaise-de-dijon-flacon-top-down')
+        //     ->addData('franprix-id', 99034507)
 
-            ->addData('monoprix-name', 'mayonnaise-de-dijon-amora')
-            ->addData('monoprix-id', 3267619);
+        //     ->addData('monoprix-name', 'mayonnaise-de-dijon-amora')
+        //     ->addData('monoprix-id', 3267619);
 
-        $manager->persist($mayo);
+        // $manager->persist($mayo);
 
         $manager->flush();
     }

@@ -4,12 +4,10 @@ namespace App\Tests\Fixtures\ThereIs\Resources;
 
 use App\Tests\Fixtures\Factory\ProductFactory;
 
-class ProductBuilder
+class ProductBuilder extends AbstractBuilder
 {
-    public function __invoke(int $count = 1): array
+    public function getFactoryFQCN(): string
     {
-        $builder = ProductFactory::createMany($count);
-
-        return array_map(fn ($builder) => $builder->object(), $builder);
+        return ProductFactory::class;
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Entity\Data\ProductData;
 use App\Entity\Product;
 use App\Entity\Provider;
 use App\Entity\ProviderAdapter;
+use App\Repository\Data\ProductDataRepository;
 use App\Services\Interfaces\UrlAdapterInterface;
 
 class UrlAdapter implements UrlAdapterInterface
@@ -15,14 +17,25 @@ class UrlAdapter implements UrlAdapterInterface
         'name' => '|-name',
     ];
 
-    private ?Provider $currentProvider = null;
+    private Provider $currentProvider;
+
+    public function __construct(
+        private readonly ProductDataRepository $productDataRepository
+    ) {
+    }
 
     public function adaptFullUrl(ProviderAdapter $providerAdapter, Product $product): string
     {
         $this->currentProvider = $providerAdapter->getProvider();
 
+        $productData = $this->productDataRepository->findOneByProduct($product);
+
+        if (null === $productData) {
+            throw new \RuntimeException('Product data not found');
+        }
+
         $baseUrl = $this->adapt($providerAdapter);
-        $url = $this->formatString($baseUrl, $product);
+        $url = $this->formatString($baseUrl, $productData);
 
         return $url;
     }
@@ -32,13 +45,13 @@ class UrlAdapter implements UrlAdapterInterface
         return $providerAdapter->getProvider()->getUrl().$providerAdapter->getUrlSchema();
     }
 
-    private function formatString(string $url, object $object): string
+    private function formatString(string $url, ProductData $productData): string
     {
         $toReplace = [];
 
         preg_match_all('/{(([a-zA-Z0-9]|-)*)}/', $url, $matches);
         foreach ($matches[1] as $convert) {
-            $toReplace['{'.$convert.'}'] = $this->get(self::SCHEMA_FORMAT[$convert], $object);
+            $toReplace['{'.$convert.'}'] = $this->get(self::SCHEMA_FORMAT[$convert], $productData);
         }
 
         return strtr($url, $toReplace);
@@ -54,25 +67,17 @@ class UrlAdapter implements UrlAdapterInterface
         }
     }
 
-    private function get(string $toCall, object $target): string
+    private function get(string $toCall, ProductData $productData): mixed
     {
         $methods = $this->transformToMethods($toCall);
 
         foreach ($methods as $method) {
-            if (!\str_contains($method, '|')) {
-                $target = $target->$method() ?? 'unknow';
+            $arg = \str_replace('|', $this->currentProvider->getName(), $method);
+            $arg = \str_replace('get', '', $arg);
 
-                continue;
-            }
-
-            if (null !== $this->currentProvider) {
-                $arg = \str_replace('|', $this->currentProvider->getName(), $method);
-                $arg = \str_replace('get', '', $arg);
-
-                $target = $target->get(strtolower($arg));
-            }
+            $arg = $productData->get(strtolower($arg));
         }
 
-        return $target;
+        return $arg ?? '';
     }
 }

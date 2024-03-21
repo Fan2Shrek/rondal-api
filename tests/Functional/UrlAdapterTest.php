@@ -3,20 +3,24 @@
 namespace App\Tests\Functional;
 
 use App\Entity\Provider;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use App\Entity\Product;
-use App\Entity\ProviderAdapter;
 use App\Services\UrlAdapter;
+use App\Entity\ProviderAdapter;
+use App\Tests\Fixtures\ThereIs\ThereIs;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Zenstruck\Foundry\Test\Factories;
 
 class UrlAdapterTest extends KernelTestCase
 {
+    use Factories;
+
     public function test_adapt_url(): void
     {
-        $product = new Product('test', 'test');
-        $product->addData('testprovider-id', 1);
+        [$data] = ThereIs::aProductData()->withData([
+            'testprovider-id' => 1,
+        ])();
         $adapter = new ProviderAdapter(new Provider('testProvider', 'http://test.com'), '/product/{id}');
 
-        $url = self::getContainer()->get(UrlAdapter::class)->adaptFullUrl($adapter, $product);
+        $url = self::getContainer()->get(UrlAdapter::class)->adaptFullUrl($adapter, $data->getProduct());
 
         $this->assertSame('http://test.com/product/1', $url);
     }
