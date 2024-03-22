@@ -25,14 +25,14 @@ class ProductData
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private Product $Product;
+    private Product $product;
 
     #[ORM\Column(type: 'entityBag')]
     private EntityDataBag $informations;
 
-    public function __construct(Product $Product)
+    public function __construct(Product $product)
     {
-        $this->Product = $Product;
+        $this->product = $product;
         $this->informations = new EntityDataBag();
     }
 
@@ -43,7 +43,7 @@ class ProductData
 
     public function getProduct(): ?Product
     {
-        return $this->Product;
+        return $this->product;
     }
 
     public function getInformations(): EntityDataBag

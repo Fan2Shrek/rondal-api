@@ -24,6 +24,6 @@ class ProductDataRepository extends ServiceEntityRepository
 
     public function findOneByProduct(Product $product): ?ProductData
     {
-        return $this->findOneBy(['Product' => $product]);
+        return $this->findOneBy(['product' => $product]);
     }
 }
