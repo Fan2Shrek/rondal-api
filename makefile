@@ -14,3 +14,4 @@ pretests:
 	$(php) bin/console --env=test doctrine:database:drop --force --if-exists
 	$(php) bin/console --env=test doctrine:database:create --if-not-exists
 	$(php) bin/console --env=test doctrine:schema:update --force --complete 
+	$(php) bin/console --env=test cache:clear --no-warmup
