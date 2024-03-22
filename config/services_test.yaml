@@ -1,0 +1,13 @@
+services: 
+  App\Tests\Mock\HttpMockClientFactory:
+    public: true
+    
+  httpMock:
+    class: Symfony\Component\HttpClient\MockHttpClient
+    factory: ['App\Tests\Mock\HttpMockClientFactory', 'create']
+    public: true
+
+  App\Services\Caller\ProviderCaller:
+    public: true
+    arguments:
+      $httpClient: '@httpMock'

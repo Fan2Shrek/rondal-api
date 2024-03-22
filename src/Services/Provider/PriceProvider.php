@@ -46,7 +46,7 @@ class PriceProvider
         return $priceInfo;
     }
 
-    private function refreshPrice(Product $product): PriceInfo
+    public function refreshPrice(Product $product): PriceInfo
     {
         $priceInfo = new PriceInfo($product);
 

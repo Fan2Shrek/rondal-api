@@ -22,7 +22,7 @@ class EntityBagType extends Type
             throw new ConversionException(sprintf('Could not convert "%s" to an instance of "%s".', get_debug_type($value), EntityDataBag::class));
         }
 
-        $value = unserialize($value);
+        $value = @unserialize($value);
 
         if (!$value instanceof EntityDataBag) {
             throw new ConversionException(sprintf('Could not convert "%s" is not an instance of "%s".', get_debug_type($value), EntityDataBag::class));

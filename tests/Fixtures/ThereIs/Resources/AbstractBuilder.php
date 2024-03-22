@@ -8,7 +8,7 @@ abstract class AbstractBuilder
 {
     public function __invoke(int $count = 1): array
     {
-        $builders = $this->getFactoryFQCN()::createMany($count);
+        $builders = $this->getFactoryFQCN()::createMany($count, $this->getParameter());
 
         return array_map(fn ($builder) => $this->postCreation($builder), $builders);
     }
@@ -18,5 +18,10 @@ abstract class AbstractBuilder
     protected function postCreation(Proxy $builder): object
     {
         return $builder->object();
+    }
+
+    protected function getParameter(): array
+    {
+        return [];
     }
 }

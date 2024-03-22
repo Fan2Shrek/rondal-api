@@ -8,8 +8,9 @@ class RedisConnection
 {
     private ?RedisAdapter $connection = null;
 
-    public function __construct(private string $dsn)
-    {
+    public function __construct(
+        private string $dsn,
+    ) {
     }
 
     private function connect(): RedisAdapter
@@ -35,6 +36,10 @@ class RedisConnection
      */
     public function __call(string $name, array $arguments): mixed
     {
+        if (!method_exists($this->getConnection(), $name)) {
+            throw new \BadMethodCallException(sprintf('Method %s does not exist', $name));
+        }
+
         return $this->getConnection()->$name(...$arguments);
     }
 }
