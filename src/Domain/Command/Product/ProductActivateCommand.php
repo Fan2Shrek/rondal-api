@@ -17,7 +17,7 @@ class ProductActivateCommand implements CurrentResourceAwareInterface
         $this->product = $currentResource;
     }
 
-    public function getCurrentResource(): Product
+    public function getProduct(): Product
     {
         return $this->product;
     }

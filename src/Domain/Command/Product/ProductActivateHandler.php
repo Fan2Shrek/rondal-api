@@ -15,7 +15,7 @@ class ProductActivateHandler
 
     public function __invoke(ProductActivateCommand $command): void
     {
-        $product = $command->getCurrentResource();
+        $product = $command->getProduct();
         $product->setActive(true);
 
         $this->productRepository->save($product, true);

@@ -15,7 +15,7 @@ use App\Entity\Product;
  * @method ProductData[]    findAll()
  * @method ProductData[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductDataRepository extends ServiceEntityRepository
+final class ProductDataRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

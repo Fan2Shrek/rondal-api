@@ -8,11 +8,6 @@ namespace App\Domain\Command\Interface;
 interface CurrentResourceAwareInterface
 {
     /**
-     * @return T
-     */
-    public function getCurrentResource(): object;
-
-    /**
      * @param T $currentResource
      */
     public function setCurrentResource(object $currentResource): void;

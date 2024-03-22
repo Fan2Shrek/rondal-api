@@ -15,7 +15,7 @@ class ProductDesactivateHandler
 
     public function __invoke(ProductDesactivateCommand $command): void
     {
-        $product = $command->getCurrentResource();
+        $product = $command->getProduct();
         $product->setActive(false);
 
         $this->productRepository->save($product, true);
