@@ -1,5 +1,6 @@
 services: 
   App\Tests\Mock\HttpMockClientFactory:
+    class: App\Tests\Mock\HttpMockClientFactory
     public: true
     
   httpMock:
@@ -7,7 +8,14 @@ services:
     factory: ['App\Tests\Mock\HttpMockClientFactory', 'create']
     public: true
 
-  App\Services\Caller\ProviderCaller:
+  App\Services\Interfaces\ProviderCallerInterface:
+    class: App\Services\ProviderCaller
     public: true
     arguments:
       $httpClient: '@httpMock'
+      $urlAdapter: '@App\Services\Interfaces\UrlAdapterInterface'
+      $productDataRepository: '@App\Repository\Data\ProductDataRepository'
+
+rondal:
+  scrapers: 
+    App\Tests\Resources\DummyScraper: dummyprovider 

@@ -2,12 +2,13 @@
 
 namespace App\Services\Interfaces;
 
+use App\Entity\Product;
+use App\Entity\ProviderAdapter;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 interface ProviderCallerInterface
 {
-    /**
-     * Return the price from the given url.
-     */
     public function call(string $url): ResponseInterface;
+
+    public function callProduct(Product $product, ProviderAdapter $provider): ResponseInterface;
 }

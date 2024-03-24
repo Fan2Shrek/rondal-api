@@ -20,7 +20,7 @@ class UrlAdapterTest extends KernelTestCase
         ])();
         $adapter = new ProviderAdapter(new Provider('testProvider', 'http://test.com'), '/product/{id}');
 
-        $url = self::getContainer()->get(UrlAdapter::class)->adaptFullUrl($adapter, $data->getProduct());
+        $url = self::getContainer()->get(UrlAdapter::class)->adaptFullUrl($adapter, $data);
 
         $this->assertSame('http://test.com/product/1', $url);
     }

@@ -2,69 +2,51 @@
 
 namespace App\Services\Provider;
 
-use App\Entity\Product;
 use App\Model\PriceInfo;
-use Psr\Cache\CacheItemInterface;
-use App\Services\Redis\RedisConnection;
+use App\Scraper\Resolver\ScraperResolverInterface;
 use App\Repository\ProviderAdapterRepository;
-use App\Services\Interfaces\UrlAdapterInterface;
-use App\Services\Interfaces\PriceFinderInterface;
+use App\Entity\Product;
+use App\Entity\ProviderAdapter;
+use App\Repository\Redis\PriceInfoRepository;
 use App\Services\Interfaces\ProviderCallerInterface;
+use App\Services\Provider\Exception\ProviderScraperNotFound;
 
-class PriceProvider
+class PriceProvider implements PriceProviderInterface
 {
     public function __construct(
-        private readonly UrlAdapterInterface $urlAdapter,
         private readonly ProviderAdapterRepository $providerAdapterRepository,
+        private readonly ScraperResolverInterface $scraperResolver,
         private readonly ProviderCallerInterface $providerCaller,
-        private readonly PriceFinderInterface $priceFinder,
-        private readonly RedisConnection $connection,
+        private readonly PriceInfoRepository $priceInfoRespository,
     ) {
     }
 
-    public function getPriceFromProduct(Product $product): PriceInfo
+    public function getPrices(Product $product): PriceInfo
     {
-        $cache = $this->checkInRedis($product);
-
-        if ($cache->isHit()) {
-            /**
-             * @var PriceInfo
-             */
-            return $cache->get();
-        }
-
-        $priceInfo = $this->refreshPrice($product);
-
-        $cache->set($priceInfo)
-            ->expiresAfter(84600);
-
-        /*
-         * @phpstan-ignore-next-line
-         */
-        $this->connection->save($cache);
-
-        return $priceInfo;
-    }
-
-    public function refreshPrice(Product $product): PriceInfo
-    {
-        $priceInfo = new PriceInfo($product);
+        $info = new PriceInfo($product);
 
         foreach ($this->providerAdapterRepository->findAll() as $providerAdapter) {
-            $url = $this->urlAdapter->adaptFullUrl($providerAdapter, $product);
-            $priceInfo->addPrice($providerAdapter->getProvider()->getName(), $this->priceFinder->findByReponse($this->providerCaller->call($url)));
+            $info->addPrice($providerAdapter->getProvider()->getName(), $this->getPrice($product, $providerAdapter));
         }
 
-        return $priceInfo;
+        $key = $product->getId();
+        $this->priceInfoRespository->save((string) $key, $info);
+
+        return $info;
     }
 
-    private function checkInRedis(Product $product): CacheItemInterface
+    public function getPrice(Product $product, ProviderAdapter $providerAdapter): float
     {
-        $key = "product-{$product->getId()}";
+        $scraper = $this->scraperResolver->resolve($providerAdapter->getProvider());
 
-        /*
-         * @phpstan-ignore-next-line
-         */
-        return $this->connection->getItem(sha1($key));
+        if (false === $scraper) {
+            throw new ProviderScraperNotFound(sprintf('No scraper found for provider %s', $providerAdapter->getProvider()->getName()));
+        }
+
+        $response = $this->providerCaller->callProduct($product, $providerAdapter);
+
+        $prices = $scraper->scrape($response);
+
+        return $prices[0];
     }
 }

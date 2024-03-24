@@ -21,6 +21,9 @@ jobs:
       - name: Execute Docker-compose
         run: ${COMPOSE} up -d db
 
+      - name: Execute Docker-compose
+        run: ${COMPOSE} up -d redis
+
       - name: Vendor install
         run: composer install --no-scripts
 

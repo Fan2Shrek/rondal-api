@@ -1,0 +1,3 @@
+rondal: 
+  scrapers:
+    App\Scraper\FranprixScraper: 'franprix'
