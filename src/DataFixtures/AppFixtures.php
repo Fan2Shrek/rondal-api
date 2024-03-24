@@ -50,26 +50,27 @@ class AppFixtures extends Fixture
         // $manager->flush();
 
         // Monop
-        $monoprix = new Provider('Monoprix', 'https://www.monoprix.fr');
+        $monoprix = new Provider('Monoprix', 'https://courses.monoprix.fr');
         $manager->persist($monoprix);
 
-        $adapter = new ProviderAdapter($monoprix, '/courses/{name}-{id}-p');
+        $adapter = new ProviderAdapter($monoprix, '/products/{id}/details');
         $manager->persist($adapter);
 
-        $data->getInformations()->set('monoprix-id', 3266125);
-        $data->getInformations()->set('monoprix-name', 'tomato-ketchup-heinz');
+        $data->getInformations()->set('monoprix-id', 'MPX_3875532');
 
-        $manager->persist($data);
         $manager->persist($ketchup);
 
-        // $mayo = new Product('mayonnaise', 'mayonnaise');
-        // $mayo->addData('franprix-name', 'mayonnaise-de-dijon-flacon-top-down')
-        //     ->addData('franprix-id', 99034507)
+        $mayo = new Product('mayonnaise', 'mayonnaise');
+        $manager->persist($mayo);
 
-        //     ->addData('monoprix-name', 'mayonnaise-de-dijon-amora')
-        //     ->addData('monoprix-id', 3267619);
+        $manager->persist($data);
 
-        // $manager->persist($mayo);
+        $data = new ProductData($mayo);
+        $data->getInformations()->set('franprix-name', 'mayonnaise-de-dijon-flacon-top-down');
+        $data->getInformations()->set('franprix-id', 99034507);
+        $data->getInformations()->set('monoprix-id', 'MPX_3875532');
+
+        $manager->persist($data);
 
         $manager->flush();
     }

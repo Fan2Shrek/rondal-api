@@ -15,6 +15,6 @@ class RefreshProductPriceHandler
 
     public function __invoke(RefreshProductPriceCommand $command): void
     {
-        $this->priceProvider->getPrices($command->product);
+        dump($this->priceProvider->getPrices($command->product));
     }
 }
