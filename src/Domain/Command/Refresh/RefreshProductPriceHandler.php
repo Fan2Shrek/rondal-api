@@ -2,14 +2,14 @@
 
 namespace App\Domain\Command\Refresh;
 
-use App\Services\Provider\PriceProvider;
+use App\Services\Provider\PriceProviderInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
 class RefreshProductPriceHandler
 {
     public function __construct(
-        private readonly PriceProvider $priceProvider,
+        private readonly PriceProviderInterface $priceProvider,
     ) {
     }
 

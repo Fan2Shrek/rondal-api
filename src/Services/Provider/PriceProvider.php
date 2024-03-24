@@ -7,6 +7,7 @@ use App\Scraper\Resolver\ScraperResolverInterface;
 use App\Repository\ProviderAdapterRepository;
 use App\Entity\Product;
 use App\Entity\ProviderAdapter;
+use App\Repository\Redis\PriceInfoRepository;
 use App\Services\Interfaces\ProviderCallerInterface;
 use App\Services\Provider\Exception\ProviderScraperNotFound;
 
@@ -16,6 +17,7 @@ class PriceProvider implements PriceProviderInterface
         private readonly ProviderAdapterRepository $providerAdapterRepository,
         private readonly ScraperResolverInterface $scraperResolver,
         private readonly ProviderCallerInterface $providerCaller,
+        private readonly PriceInfoRepository $priceInfoRespository,
     ) {
     }
 
@@ -26,6 +28,9 @@ class PriceProvider implements PriceProviderInterface
         foreach ($this->providerAdapterRepository->findAll() as $providerAdapter) {
             $info->addPrice($providerAdapter->getProvider()->getName(), $this->getPrice($product, $providerAdapter));
         }
+
+        $key = $product->getId();
+        $this->priceInfoRespository->save((string) $key, $info);
 
         return $info;
     }

@@ -39,4 +39,13 @@ abstract class AbstractProviderScraper implements ProviderScraperInterface
     {
         return $this->provider === $provider;
     }
+
+    public static function StringToFloat(string $price): float
+    {
+        $convertedPrice = trim($price);
+        $convertedPrice = str_replace('€', '', $convertedPrice);
+        $convertedPrice = str_replace(',', '.', $convertedPrice);
+
+        return (float) $convertedPrice;
+    }
 }

@@ -49,9 +49,13 @@ class Product
         $this->active = true;
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
-        return $this->id ?? null;
+        if (null === ($this->id ?? null)) {
+            throw new \LogicException('Product id is not set');
+        }
+
+        return $this->id;
     }
 
     public function getName(): string

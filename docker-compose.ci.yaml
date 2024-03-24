@@ -14,5 +14,8 @@ services:
     volumes:
       - .:/srv
 
+  redis:
+    image: redis:7
+
 volumes:
   db_data:
