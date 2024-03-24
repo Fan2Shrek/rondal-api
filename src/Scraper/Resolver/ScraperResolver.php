@@ -2,8 +2,8 @@
 
 namespace App\Scraper\Resolver;
 
-use App\Scraper\ProviderScraperInterface;
 use App\Entity\Provider;
+use App\Scraper\ProviderScraperInterface;
 
 class ScraperResolver implements ScraperResolverInterface
 {

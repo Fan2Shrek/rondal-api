@@ -4,9 +4,9 @@ namespace App\DependencyInjection;
 
 use App\Repository\ProviderRepository;
 use App\Scraper\Factory\ScraperFactory;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 class RondalExtension extends Extension

@@ -5,13 +5,13 @@ namespace App\Scraper;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-class FranprixScraper extends AbstractProviderScraper
+class MonoprixScraper extends AbstractProviderScraper
 {
     protected function doScrape(ResponseInterface $response): array
     {
         $crawler = new Crawler($response->getContent());
 
-        $price = $crawler->filter('div.product-item-price span')->text();
+        $price = $crawler->filter('div[data-test="price-container"] span')->text();
 
         return [self::StringToFloat($price)];
     }

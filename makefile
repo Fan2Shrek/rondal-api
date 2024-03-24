@@ -4,6 +4,8 @@ PHPSTAN_CONFIGURATION_FILE=phpstan.neon
 include .boing/makes/boing.mk
 include .boing/makes/symfony.mk
 
+PHP_CS_FIXER_CONFIGURATION_FILE=.php-cs-fixer.php
+
 phpunit:
 	$(php) bin/phpunit
 

@@ -2,12 +2,12 @@
 
 namespace App\Tests\Functional;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use App\Tests\Fixtures\ThereIs\ThereIs;
 use App\Entity\Provider;
+use App\Services\Provider\PriceProvider;
+use App\Tests\Fixtures\ThereIs\ThereIs;
 use App\Tests\Fixtures\ThereIs\ThereIsTrait;
 use App\Tests\Mock\HttpMockClientFactory;
-use App\Services\Provider\PriceProvider;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PriceProviderTest extends KernelTestCase
 {

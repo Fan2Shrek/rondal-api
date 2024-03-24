@@ -2,12 +2,12 @@
 
 namespace App\DependencyInjection\Complier;
 
+use App\Scraper\Resolver\ScraperResolver;
 use App\Scraper\Resolver\ScraperResolverInterface;
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use App\Scraper\Resolver\ScraperResolver;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
 class ScraperResolverPass implements CompilerPassInterface
 {

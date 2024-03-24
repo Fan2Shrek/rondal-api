@@ -6,8 +6,8 @@ use App\Entity\Data\ProductData;
 use App\Entity\Product;
 use App\Entity\Provider;
 use App\Entity\ProviderAdapter;
-use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
@@ -23,7 +23,7 @@ class AppFixtures extends Fixture
         $ketchup = new Product('Ketchup', 'ketchup');
 
         $data = new ProductData($ketchup);
-        $data->getInformations()->set('franprix-id', 99073109);
+        $data->getInformations()->set('franprix-id', 99145086);
         $data->getInformations()->set('franprix-name', 'ketchup-flacon-top-down');
 
         // Auchan
@@ -50,14 +50,14 @@ class AppFixtures extends Fixture
         // $manager->flush();
 
         // Monop
-        // $monoprix = new Provider('Monoprix', 'https://www.monoprix.fr');
-        // $manager->persist($monoprix);
+        $monoprix = new Provider('Monoprix', 'https://www.monoprix.fr');
+        $manager->persist($monoprix);
 
-        // $adapter = new ProviderAdapter($monoprix, '/courses/{name}-{id}-p');
-        // $manager->persist($adapter);
+        $adapter = new ProviderAdapter($monoprix, '/courses/{name}-{id}-p');
+        $manager->persist($adapter);
 
-        // $ketchup->addData('monoprix-id', 3266125);
-        // $ketchup->addData('monoprix-name', 'tomato-ketchup-heinz');
+        $data->getInformations()->set('monoprix-id', 3266125);
+        $data->getInformations()->set('monoprix-name', 'tomato-ketchup-heinz');
 
         $manager->persist($data);
         $manager->persist($ketchup);

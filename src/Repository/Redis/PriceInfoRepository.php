@@ -2,8 +2,8 @@
 
 namespace App\Repository\Redis;
 
-use App\Services\Redis\RedisConnection;
 use App\Model\PriceInfo;
+use App\Services\Redis\RedisConnection;
 
 /**
  * @extends AbstractRedisRepository<PriceInfo>

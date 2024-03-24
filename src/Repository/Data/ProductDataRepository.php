@@ -3,9 +3,9 @@
 namespace App\Repository\Data;
 
 use App\Entity\Data\ProductData;
+use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Entity\Product;
 
 /**
  * @extends ServiceEntityRepository<ProductData>

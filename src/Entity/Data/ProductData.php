@@ -3,16 +3,16 @@
 namespace App\Entity\Data;
 
 use App\Entity\Product;
+use App\Object\Bag\EntityDataBag;
 use App\Repository\Data\ProductDataRepository;
 use Doctrine\ORM\Mapping as ORM;
-use App\Object\Bag\EntityDataBag;
 
 /**
  * @method mixed get(string $key)
- * @method void set(string $key, mixed $value)
- * @method bool has(string $key)
- * @method void remove(string $key)
- * @method void clear()
+ * @method void  set(string $key, mixed $value)
+ * @method bool  has(string $key)
+ * @method void  remove(string $key)
+ * @method void  clear()
  * @method array all()
  */
 #[ORM\Entity(repositoryClass: ProductDataRepository::class)]

@@ -3,9 +3,9 @@
 namespace App\Doctrine\Types;
 
 use App\Object\Bag\EntityDataBag;
-use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
+use Doctrine\DBAL\Types\Type;
 
 class EntityBagType extends Type
 {

@@ -2,12 +2,12 @@
 
 namespace App\Services\Provider;
 
-use App\Model\PriceInfo;
-use App\Scraper\Resolver\ScraperResolverInterface;
-use App\Repository\ProviderAdapterRepository;
 use App\Entity\Product;
 use App\Entity\ProviderAdapter;
+use App\Model\PriceInfo;
+use App\Repository\ProviderAdapterRepository;
 use App\Repository\Redis\PriceInfoRepository;
+use App\Scraper\Resolver\ScraperResolverInterface;
 use App\Services\Interfaces\ProviderCallerInterface;
 use App\Services\Provider\Exception\ProviderScraperNotFound;
 

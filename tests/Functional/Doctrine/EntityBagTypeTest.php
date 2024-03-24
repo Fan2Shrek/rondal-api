@@ -2,13 +2,13 @@
 
 namespace App\Tests\Functional\Doctrine;
 
-use PHPUnit\Framework\TestCase;
 use App\Doctrine\Types\EntityBagType;
 use App\Object\Bag\EntityDataBag;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 use Mockery\MockInterface;
+use PHPUnit\Framework\TestCase;
 
 class EntityBagTypeTest extends TestCase
 {

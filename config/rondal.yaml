@@ -1,3 +1,4 @@
 rondal: 
   scrapers:
     App\Scraper\FranprixScraper: 'franprix'
+    App\Scraper\MonoprixScraper: 'monoprix'

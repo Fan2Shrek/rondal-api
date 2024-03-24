@@ -2,11 +2,11 @@
 
 namespace App\Api\Serializer;
 
-use App\Entity\Product;
 use App\Domain\Command\Interface\CurrentResourceAwareInterface;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
+use App\Entity\Product;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class CurrentResourceDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
 {

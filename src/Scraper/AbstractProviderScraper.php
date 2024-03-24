@@ -2,11 +2,11 @@
 
 namespace App\Scraper;
 
-use Symfony\Contracts\HttpClient\ResponseInterface;
+use App\Entity\Provider;
+use App\Event\Scraping\ScrapingFailedEvent;
 use App\Scraper\Exceptions\ScrapingFailedException;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use App\Event\Scraping\ScrapingFailedEvent;
-use App\Entity\Provider;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 abstract class AbstractProviderScraper implements ProviderScraperInterface
 {

@@ -2,12 +2,12 @@
 
 namespace App\Services\Redis;
 
-use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Psr\Cache\CacheItemInterface;
+use Symfony\Component\Cache\Adapter\RedisAdapter;
 
 /**
  * @method CacheItemInterface getItem(string $key)
- * @method bool save(CacheItemInterface $item)
+ * @method bool               save(CacheItemInterface $item)
  */
 class RedisConnection
 {

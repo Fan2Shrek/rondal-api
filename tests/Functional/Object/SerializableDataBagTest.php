@@ -2,8 +2,8 @@
 
 namespace App\Tests\Functional\Object;
 
-use PHPUnit\Framework\TestCase;
 use App\Object\Bag\SerializableDataBag;
+use PHPUnit\Framework\TestCase;
 
 class SerializableDataBagTest extends TestCase
 {

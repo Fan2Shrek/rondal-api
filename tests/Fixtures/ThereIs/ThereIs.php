@@ -4,8 +4,8 @@ namespace App\Tests\Fixtures\ThereIs;
 
 use App\Tests\Fixtures\ThereIs\Resources\ProductBuilder;
 use App\Tests\Fixtures\ThereIs\Resources\ProductDataBuilder;
-use App\Tests\Fixtures\ThereIs\Resources\ProviderBuilder;
 use App\Tests\Fixtures\ThereIs\Resources\ProviderAdapterBuilder;
+use App\Tests\Fixtures\ThereIs\Resources\ProviderBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ThereIs

@@ -2,8 +2,8 @@
 
 namespace App\Tests\Functional\Scraper;
 
-use PHPUnit\Framework\TestCase;
 use App\Scraper\AbstractProviderScraper;
+use PHPUnit\Framework\TestCase;
 
 class AbstractProviderTest extends TestCase
 {

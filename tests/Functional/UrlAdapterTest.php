@@ -3,8 +3,8 @@
 namespace App\Tests\Functional;
 
 use App\Entity\Provider;
-use App\Services\UrlAdapter;
 use App\Entity\ProviderAdapter;
+use App\Services\UrlAdapter;
 use App\Tests\Fixtures\ThereIs\ThereIs;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Zenstruck\Foundry\Test\Factories;

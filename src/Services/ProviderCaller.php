@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
+use App\Entity\Product;
+use App\Entity\ProviderAdapter;
+use App\Repository\Data\ProductDataRepository;
 use App\Services\Interfaces\ProviderCallerInterface;
 use App\Services\Interfaces\UrlAdapterInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
-use App\Entity\Product;
-use App\Entity\ProviderAdapter;
-use App\Repository\Data\ProductDataRepository;
 
 class ProviderCaller implements ProviderCallerInterface
 {
