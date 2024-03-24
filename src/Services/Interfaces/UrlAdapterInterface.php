@@ -2,7 +2,7 @@
 
 namespace App\Services\Interfaces;
 
-use App\Entity\Product;
+use App\Entity\Data\ProductData;
 use App\Entity\ProviderAdapter;
 
 interface UrlAdapterInterface
@@ -15,5 +15,5 @@ interface UrlAdapterInterface
     /**
      *  Adapt the url and return the full url to call.
      */
-    public function adaptFullUrl(ProviderAdapter $providerAdapter, Product $product): string;
+    public function adaptFullUrl(ProviderAdapter $providerAdapter, ProductData $product): string;
 }

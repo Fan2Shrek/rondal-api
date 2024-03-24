@@ -2,7 +2,7 @@
 
 namespace App\Tests\Functional;
 
-use App\Services\Provider\PriceProvider;
+use App\Services\Provider\OldPriceProvider;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use App\Tests\Fixtures\ThereIs\ThereIs;
 use App\Entity\Provider;
@@ -24,7 +24,7 @@ class PriceProviderTest extends KernelTestCase
 
     public function test_get_price_from_product(): void
     {
-        $priceProvider = self::getContainer()->get(PriceProvider::class);
+        $priceProvider = self::getContainer()->get(OldPriceProvider::class);
         [$data] = ThereIs::aProductData()->withData([
             'yipeetest-id' => 1,
         ])();

@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Entity\Data\ProductData;
-use App\Entity\Product;
 use App\Entity\Provider;
 use App\Entity\ProviderAdapter;
 use App\Repository\Data\ProductDataRepository;
@@ -24,15 +23,9 @@ class UrlAdapter implements UrlAdapterInterface
     ) {
     }
 
-    public function adaptFullUrl(ProviderAdapter $providerAdapter, Product $product): string
+    public function adaptFullUrl(ProviderAdapter $providerAdapter, ProductData $productData): string
     {
         $this->currentProvider = $providerAdapter->getProvider();
-
-        $productData = $this->productDataRepository->findOneByProduct($product);
-
-        if (null === $productData) {
-            throw new \RuntimeException('Product data not found');
-        }
 
         $baseUrl = $this->adapt($providerAdapter);
         $url = $this->formatString($baseUrl, $productData);
