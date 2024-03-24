@@ -13,6 +13,10 @@ trait ThereIsTrait
     {
         assert($this instanceof KernelTestCase, 'This trait can only be used in a KernelTestCase');
 
-        ThereIs::setContainer(self::getContainer());
+        if (!static::$booted) {
+            static::bootKernel();
+        }
+
+        ThereIs::setContainer(static::getContainer());
     }
 }

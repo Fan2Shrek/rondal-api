@@ -24,13 +24,13 @@ class PriceProviderTest extends KernelTestCase
 
     public function test_get_price_from_product(): void
     {
-        $priceProvider = self::getContainer()->get(PriceProvider::class);
         [$data] = ThereIs::aProductData()->withData([
             'dummyprovider-id' => 1,
         ])();
         $provider = new Provider('dummyprovider', 'http://test.com');
         ThereIs::aProviderAdapter()->withProvider($provider)->withUrl('/buy/{id}')();
 
+        $priceProvider = self::getContainer()->get(PriceProvider::class);
         $priceInfo = $priceProvider->getPrices($data->getProduct());
 
         $this->assertEquals(15.0, $priceInfo->getPrices()['dummyprovider']);

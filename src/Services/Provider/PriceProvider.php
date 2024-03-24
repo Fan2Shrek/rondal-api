@@ -26,7 +26,11 @@ class PriceProvider implements PriceProviderInterface
         $info = new PriceInfo($product);
 
         foreach ($this->providerAdapterRepository->findAll() as $providerAdapter) {
-            $info->addPrice($providerAdapter->getProvider()->getName(), $this->getPrice($product, $providerAdapter));
+            $price = $this->getPrice($product, $providerAdapter);
+
+            if (null !== $price) {
+                $info->addPrice($providerAdapter->getProvider()->getName(), $price);
+            }
         }
 
         $key = $product->getId();
@@ -35,7 +39,7 @@ class PriceProvider implements PriceProviderInterface
         return $info;
     }
 
-    public function getPrice(Product $product, ProviderAdapter $providerAdapter): float
+    public function getPrice(Product $product, ProviderAdapter $providerAdapter): ?float
     {
         $scraper = $this->scraperResolver->resolve($providerAdapter->getProvider());
 
@@ -47,6 +51,6 @@ class PriceProvider implements PriceProviderInterface
 
         $prices = $scraper->scrape($response);
 
-        return $prices[0];
+        return $prices[0] ?? null;
     }
 }

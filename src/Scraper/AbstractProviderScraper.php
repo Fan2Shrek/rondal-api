@@ -21,6 +21,8 @@ abstract class AbstractProviderScraper implements ProviderScraperInterface
     {
         try {
             $price = $this->doScrape($response);
+
+            $this->postScrape($price);
             $this->eventDispatcher->dispatch(new ScrapingSuccessedEvent($this->provider));
 
             return $price;
@@ -51,5 +53,15 @@ abstract class AbstractProviderScraper implements ProviderScraperInterface
         $convertedPrice = str_replace(',', '.', $convertedPrice);
 
         return (float) $convertedPrice;
+    }
+
+    /**
+     * @param mixed[] $price
+     */
+    protected function postScrape(array $price): void
+    {
+        if (!\is_float($price[0]) || 0.0 === $price[0]) {
+            throw new ScrapingFailedException(sprintf('Scraping failed for provider %s', $this->provider->getName()));
+        }
     }
 }

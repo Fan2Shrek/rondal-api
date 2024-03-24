@@ -24,7 +24,7 @@ class ThereIs
 
     public static function aProductData(): ProductDataBuilder
     {
-        return new ProductDataBuilder();
+        return new ProductDataBuilder(self::$container);
     }
 
     public static function aProvider(): ProviderBuilder

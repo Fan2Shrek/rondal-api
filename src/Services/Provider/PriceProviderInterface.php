@@ -8,7 +8,10 @@ use App\Model\PriceInfo;
 
 interface PriceProviderInterface
 {
-    public function getPrice(Product $product, ProviderAdapter $providerAdapter): float;
+    /**
+     * @return float|null null on failure
+     */
+    public function getPrice(Product $product, ProviderAdapter $providerAdapter): ?float;
 
     public function getPrices(Product $product): PriceInfo;
 }

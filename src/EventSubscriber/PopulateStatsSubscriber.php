@@ -36,7 +36,7 @@ class PopulateStatsSubscriber implements EventSubscriberInterface
             $this->stats[$event->provider->getName()]['failed'] = 0;
         }
 
-        --$this->stats[$event->provider->getName()]['failed'];
+        ++$this->stats[$event->provider->getName()]['failed'];
     }
 
     public function onScrapingSuccess(ScrapingSuccessedEvent $event): void

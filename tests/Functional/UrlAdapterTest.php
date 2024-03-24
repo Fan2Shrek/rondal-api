@@ -6,12 +6,14 @@ use App\Entity\Provider;
 use App\Entity\ProviderAdapter;
 use App\Services\UrlAdapter;
 use App\Tests\Fixtures\ThereIs\ThereIs;
+use App\Tests\Fixtures\ThereIs\ThereIsTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Zenstruck\Foundry\Test\Factories;
 
 class UrlAdapterTest extends KernelTestCase
 {
     use Factories;
+    use ThereIsTrait;
 
     public function test_adapt_url(): void
     {

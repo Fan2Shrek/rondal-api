@@ -15,6 +15,6 @@ class DummyScraper extends AbstractProviderScraper
         $crawler = new Crawler($content);
         $price = $crawler->filter('.price span')->text();
 
-        return [str_replace('€', '', $price)];
+        return [static::StringToFloat($price)];
     }
 }
