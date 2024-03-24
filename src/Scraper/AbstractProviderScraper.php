@@ -4,6 +4,7 @@ namespace App\Scraper;
 
 use App\Entity\Provider;
 use App\Event\Scraping\ScrapingFailedEvent;
+use App\Event\Scraping\ScrapingSuccessedEvent;
 use App\Scraper\Exceptions\ScrapingFailedException;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -19,7 +20,10 @@ abstract class AbstractProviderScraper implements ProviderScraperInterface
     public function scrape(ResponseInterface $response): array
     {
         try {
-            return $this->doScrape($response);
+            $price = $this->doScrape($response);
+            $this->eventDispatcher->dispatch(new ScrapingSuccessedEvent($this->provider));
+
+            return $price;
         } catch (ScrapingFailedException $e) {
             $this->handleException($e);
         }
@@ -32,7 +36,7 @@ abstract class AbstractProviderScraper implements ProviderScraperInterface
 
     protected function handleException(ScrapingFailedException $e): void
     {
-        $this->eventDispatcher->dispatch(new ScrapingFailedEvent($e));
+        $this->eventDispatcher->dispatch(new ScrapingFailedEvent($e, $this->provider));
     }
 
     public function supports(Provider $provider): bool

@@ -2,13 +2,15 @@
 
 namespace App\Event\Scraping;
 
+use App\Entity\Provider;
 use App\Scraper\Exceptions\ScrapingFailedException;
-use Symfony\Contracts\EventDispatcher\Event;
 
-class ScrapingFailedEvent extends Event
+class ScrapingFailedEvent extends AbstractScrapingEvent
 {
     public function __construct(
-        public readonly ScrapingFailedException $e
+        public readonly ScrapingFailedException $e,
+        Provider $provider,
     ) {
+        parent::__construct($provider);
     }
 }
