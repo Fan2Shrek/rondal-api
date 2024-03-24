@@ -14,7 +14,7 @@ class ProviderBuilder extends AbstractBuilder
         return ProviderFactory::class;
     }
 
-    public function getParameter(): array
+    public function getParameters(): array
     {
         return array_filter([
             'name' => $this->name,

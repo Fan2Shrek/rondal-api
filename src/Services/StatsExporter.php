@@ -12,8 +12,8 @@ class StatsExporter
     ) {
     }
 
-    /** 
-     * @param array<string, array<string, int>> $stats 
+    /**
+     * @param array<string, array<string, int>> $stats
      */
     public function export(array $stats): void
     {

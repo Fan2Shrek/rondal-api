@@ -43,10 +43,12 @@ class CurrentResourceDenormalizer implements DenormalizerInterface, Denormalizer
     }
 
     /**
-     * @return string[]
+     * @return array<string, bool>
      */
     public function getSupportedTypes(?string $format): array
     {
-        return [CurrentResourceAwareInterface::class];
+        return [
+            CurrentResourceAwareInterface::class => false,
+        ];
     }
 }

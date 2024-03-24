@@ -55,8 +55,8 @@ class PopulateStatsSubscriber implements EventSubscriberInterface
         }
     }
 
-    /** 
-     * @return array<string, array<string, int>> 
+    /**
+     * @return array<string, array<string, int>>
      */
     public function getStats(): array
     {

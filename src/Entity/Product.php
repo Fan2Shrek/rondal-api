@@ -13,13 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiResource(operations: [
     new GetCollection(),
     new Post(
-        '/product/{id}/activate',
+        '/products/{id}/activate',
         messenger: 'input',
         input: ProductActivateCommand::class,
         output: false,
     ),
     new Post(
-        '/product/{id}/desactivate',
+        '/products/{id}/desactivate',
         messenger: 'input',
         input: ProductDesactivateCommand::class,
         output: false,
