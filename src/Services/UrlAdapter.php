@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Entity\Data\ProductData;
 use App\Entity\Provider;
 use App\Entity\ProviderAdapter;
-use App\Repository\Data\ProductDataRepository;
 use App\Services\Interfaces\UrlAdapterInterface;
 
 class UrlAdapter implements UrlAdapterInterface
@@ -17,11 +16,6 @@ class UrlAdapter implements UrlAdapterInterface
     ];
 
     private Provider $currentProvider;
-
-    public function __construct(
-        private readonly ProductDataRepository $productDataRepository
-    ) {
-    }
 
     public function adaptFullUrl(ProviderAdapter $providerAdapter, ProductData $productData): string
     {

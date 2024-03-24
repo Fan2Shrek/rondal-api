@@ -23,9 +23,14 @@ class Kernel extends BaseKernel
         parent::prepareContainer($container);
     }
 
+    /**
+     * @phpstan-ignore-next-line
+     */
     private function configureContainer(ContainerConfigurator $container, LoaderInterface $loader, ContainerBuilder $builder): void
     {
-        $container->import($this->getConfigDir().'/rondal.yaml');
+        if ('test' !== $this->environment) {
+            $container->import($this->getConfigDir().'/rondal.yaml');
+        }
 
         $this->baseConfigureContainer($container, $loader, $builder);
     }

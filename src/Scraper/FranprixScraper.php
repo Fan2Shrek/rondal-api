@@ -10,6 +10,7 @@ class FranprixScraper extends AbstractProviderScraper
     {
         dd('Scraping Franprix');
 
+        /* @phpstan-ignore-next-line */
         return [];
     }
 }

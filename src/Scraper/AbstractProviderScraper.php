@@ -27,6 +27,7 @@ abstract class AbstractProviderScraper implements ProviderScraperInterface
         return [];
     }
 
+    /** @return float[] */
     abstract protected function doScrape(ResponseInterface $response): array;
 
     protected function handleException(ScrapingFailedException $e): void

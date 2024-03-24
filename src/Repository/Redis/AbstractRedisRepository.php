@@ -58,7 +58,7 @@ abstract class AbstractRedisRepository
             $resource = $cache->get();
 
             if (!$resource instanceof $this->class) {
-                throw new \RuntimeException(sprintf('Expected instance of %s, got %s', $this->class, get_class($resource)));
+                throw new \RuntimeException(sprintf('Expected instance of %s, got %s', $this->class, get_debug_type($resource)));
             }
 
             return $resource;

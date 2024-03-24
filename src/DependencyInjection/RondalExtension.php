@@ -11,8 +11,16 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RondalExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
+        $mergedConfig = [];
+
+        foreach ($configs as $item) {
+            foreach ($item as $key => $value) {
+                $mergedConfig[$key] = array_merge($mergedConfig[$key] ?? [], $value);
+            }
+        }
+
         $configs = $configs[0];
 
         $factory = new Definition(ScraperFactory::class);
