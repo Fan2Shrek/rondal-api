@@ -17,5 +17,8 @@ services:
       $productDataRepository: '@App\Repository\Data\ProductDataRepository'
 
 rondal:
+  all: 
+    track: true
+    
   scrapers: 
     App\Tests\Resources\DummyScraper: dummyprovider 

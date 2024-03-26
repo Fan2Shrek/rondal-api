@@ -50,16 +50,17 @@ class RefreshAllProductCommand extends Command
 
     private function displayStats(SymfonyStyle $io): void
     {
-        $stats = $this->populateStatsSubscriber->getStats();
+        $stats = $this->populateStatsSubscriber->fomartStats();
 
         $io->section('Stats');
         $io->table(
-            ['Provider', 'Success', 'Failed'],
+            ['Provider', 'Success', 'Failed', 'Skiped'],
             array_map(
                 fn ($provider, $stats) => [
                     $provider,
                     $stats['success'] ?? 0,
                     $stats['failed'] ?? 0,
+                    $stats['skiped'] ?? 0,
                 ],
                 array_keys($stats),
                 $stats,

@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 
 use App\Event\Scraping\ScrapingFailedEvent;
 use App\Event\Scraping\ScrapingSuccessedEvent;
+use App\Scraper\Evaluator\ScrapEvaluator;
 use App\Services\StatsExporter;
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -12,11 +13,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class PopulateStatsSubscriber implements EventSubscriberInterface
 {
-    /** @var array<string, array<string, int>> */
-    private array $stats = [];
-
     public function __construct(
         private readonly StatsExporter $statsExporter,
+        private readonly ScrapEvaluator $scrapEvaluator,
     ) {
     }
 
@@ -32,34 +31,45 @@ class PopulateStatsSubscriber implements EventSubscriberInterface
 
     public function onScrapingFailed(ScrapingFailedEvent $event): void
     {
-        if (!isset($this->stats[$event->provider->getName()]) || !isset($this->stats[$event->provider->getName()]['failed'])) {
-            $this->stats[$event->provider->getName()]['failed'] = 0;
-        }
-
-        ++$this->stats[$event->provider->getName()]['failed'];
+        $this->scrapEvaluator->addFailed($event->provider);
     }
 
     public function onScrapingSuccess(ScrapingSuccessedEvent $event): void
     {
-        if (!isset($this->stats[$event->provider->getName()]) || !isset($this->stats[$event->provider->getName()]['success'])) {
-            $this->stats[$event->provider->getName()]['success'] = 0;
-        }
-
-        ++$this->stats[$event->provider->getName()]['success'];
+        $this->scrapEvaluator->addSuccess($event->provider);
     }
 
     public function exportStats(Event $event): void
     {
-        if (!empty($this->stats)) {
-            $this->statsExporter->export($this->stats);
-        }
+        $this->statsExporter->export($this->fomartStats());
+    }
+
+    /**
+     * @return array{
+     *   success: array<string, int>,
+     *   failed: array<string, int>,
+     *   skiped: array<string, int>,
+     * }
+     */
+    private function getStats(): array
+    {
+        return $this->scrapEvaluator->getStats();
     }
 
     /**
      * @return array<string, array<string, int>>
      */
-    public function getStats(): array
+    public function fomartStats(): array
     {
-        return $this->stats;
+        $stats = $this->getStats();
+        $formatted = [];
+
+        foreach ($stats as $status => $providerStats) {
+            foreach ($providerStats as $name => $value) {
+                $formatted[$name][$status] = $value;
+            }
+        }
+
+        return $formatted;
     }
 }
