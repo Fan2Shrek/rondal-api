@@ -35,7 +35,7 @@ class PopulateStatsTest extends KernelTestCase
 
         $priceProvider->getPrices($data->getProduct());
 
-        $this->assertEquals(['dummyprovider' => ['success' => 1, 'failed' => 0, 'skiped' => 0]], $this->getPopulateStatsSubscriber()->fomartStats());
+        $this->assertEquals(['dummyprovider' => ['success' => 1, 'failed' => 0, 'skipped' => 0]], $this->getPopulateStatsSubscriber()->fomartStats());
     }
 
     public function test_populate_on_fail(): void
@@ -49,7 +49,7 @@ class PopulateStatsTest extends KernelTestCase
 
         $priceProvider->getPrices($data->getProduct());
 
-        $this->assertEquals(['dummyprovider' => ['success' => 0, 'failed' => 1, 'skiped' => 0]], $this->getPopulateStatsSubscriber()->fomartStats());
+        $this->assertEquals(['dummyprovider' => ['success' => 0, 'failed' => 1, 'skipped' => 0]], $this->getPopulateStatsSubscriber()->fomartStats());
     }
 
     public function test_populate_both(): void
@@ -67,7 +67,7 @@ class PopulateStatsTest extends KernelTestCase
         $priceProvider->getPrices($data->getProduct());
         $priceProvider->getPrices($dataSecond->getProduct());
 
-        $this->assertEquals(['dummyprovider' => ['success' => 1, 'failed' => 1, 'skiped' => 0]], $this->getPopulateStatsSubscriber()->fomartStats());
+        $this->assertEquals(['dummyprovider' => ['success' => 1, 'failed' => 1, 'skipped' => 0]], $this->getPopulateStatsSubscriber()->fomartStats());
     }
 
     private function getPopulateStatsSubscriber(): PopulateStatsSubscriber

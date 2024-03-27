@@ -29,7 +29,7 @@ class Kernel extends BaseKernel
     private function configureContainer(ContainerConfigurator $container, LoaderInterface $loader, ContainerBuilder $builder): void
     {
         if ('test' !== $this->environment) {
-            $container->import($this->getConfigDir().'/rondal.yaml');
+            $container->import($this->getConfigDir() . '/rondal.yaml');
         }
 
         $this->baseConfigureContainer($container, $loader, $builder);

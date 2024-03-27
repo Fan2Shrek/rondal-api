@@ -3,6 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Event\Scraping\ScrapingFailedEvent;
+use App\Event\Scraping\ScrapingSkipedEvent;
 use App\Event\Scraping\ScrapingSuccessedEvent;
 use App\Scraper\Evaluator\ScrapEvaluator;
 use App\Services\StatsExporter;
@@ -13,6 +14,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class PopulateStatsSubscriber implements EventSubscriberInterface
 {
+    private bool $isActive = false;
+
     public function __construct(
         private readonly StatsExporter $statsExporter,
         private readonly ScrapEvaluator $scrapEvaluator,
@@ -24,6 +27,7 @@ class PopulateStatsSubscriber implements EventSubscriberInterface
         return [
             ScrapingFailedEvent::class => 'onScrapingFailed',
             ScrapingSuccessedEvent::class => 'onScrapingSuccess',
+            ScrapingSkipedEvent::class => 'onScrapingSkiped',
             ConsoleEvents::TERMINATE => 'exportStats',
             KernelEvents::TERMINATE => 'exportStats',
         ];
@@ -31,24 +35,39 @@ class PopulateStatsSubscriber implements EventSubscriberInterface
 
     public function onScrapingFailed(ScrapingFailedEvent $event): void
     {
+        $this->activate();
         $this->scrapEvaluator->addFailed($event->provider);
     }
 
     public function onScrapingSuccess(ScrapingSuccessedEvent $event): void
     {
+        $this->activate();
         $this->scrapEvaluator->addSuccess($event->provider);
+    }
+
+    public function onScrapingSkiped(ScrapingSkipedEvent $event): void
+    {
+        $this->activate();
+        $this->scrapEvaluator->addSkipped($event->provider);
     }
 
     public function exportStats(Event $event): void
     {
-        $this->statsExporter->export($this->fomartStats());
+        if ($this->isActive) {
+            $this->statsExporter->export($this->fomartStats());
+        }
+    }
+
+    private function activate(): void
+    {
+        $this->isActive = true;
     }
 
     /**
      * @return array{
      *   success: array<string, int>,
      *   failed: array<string, int>,
-     *   skiped: array<string, int>,
+     *   skipped: array<string, int>,
      * }
      */
     private function getStats(): array

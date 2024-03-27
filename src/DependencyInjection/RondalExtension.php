@@ -15,18 +15,8 @@ class RondalExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $mergedConfig = [];
-
         $configuration = new Configurator();
-        $this->processConfiguration($configuration, $configs);
-
-        foreach ($configs as $item) {
-            foreach ($item as $key => $value) {
-                $mergedConfig[$key] = array_merge($mergedConfig[$key] ?? [], $value);
-            }
-        }
-
-        $configs = $configs[0];
+        $configs = $this->processConfiguration($configuration, $configs);
 
         $scrapEvaluator = new Definition(ScrapEvaluator::class);
         $container->setDefinition('rondal.scraper_evaluator', $scrapEvaluator);
@@ -53,7 +43,7 @@ class RondalExtension extends Extension
                 ->setFactory([new Reference('rondal.scraper_factory'), 'create'])
                 ->setArguments([$class, $providerName]);
 
-            if ($mergedConfig['all']['track']) {
+            if ($configs['all']['track']) {
                 $definition->addArgument(true);
             }
 

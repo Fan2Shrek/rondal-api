@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Scraper\Exception;
+namespace App\Scraper\Exceptions;
 
-class PriceNotFoundException extends \Exception
+class PriceNotFoundException extends ScrapingFailedException
 {
 }

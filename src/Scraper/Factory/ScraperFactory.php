@@ -38,10 +38,13 @@ class ScraperFactory
             throw new UnsupportedScraperExecption(sprintf('There are not provider with the name "%s".', $providerName));
         }
 
+        $args = [$provider, $this->eventDispatcher];
+
         if ($track) {
             $this->scrapEvaluator->track($provider);
+            $args[] = $this->scrapEvaluator;
         }
 
-        return new $scraperClass($provider, $this->eventDispatcher);
+        return new $scraperClass(...$args);
     }
 }

@@ -13,7 +13,7 @@ class ScrapEvaluator
     private array $failed = [];
 
     /** @var array<string, int> */
-    private array $skiped = [];
+    private array $skipped = [];
 
     /** @var array<Provider> */
     private array $trackedProvider = [];
@@ -32,10 +32,10 @@ class ScrapEvaluator
         }
     }
 
-    public function addSkiped(Provider $provider): void
+    public function addSkipped(Provider $provider): void
     {
         if (in_array($provider, $this->trackedProvider)) {
-            ++$this->skiped[$provider->getName()];
+            ++$this->skipped[$provider->getName()];
         }
     }
 
@@ -50,10 +50,9 @@ class ScrapEvaluator
 
     public function track(Provider $provider): void
     {
-        dump();
         $this->trackedProvider[] = $provider;
 
-        $this->skiped[$provider->getName()] = 0;
+        $this->skipped[$provider->getName()] = 0;
         $this->failed[$provider->getName()] = 0;
         $this->success[$provider->getName()] = 0;
     }
@@ -62,7 +61,7 @@ class ScrapEvaluator
      * @return array{
      *   success: array<string, int>,
      *   failed: array<string, int>,
-     *   skiped: array<string, int>,
+     *   skipped: array<string, int>,
      * }
      */
     public function getStats(): array
@@ -70,7 +69,7 @@ class ScrapEvaluator
         return [
             'success' => $this->success,
             'failed' => $this->failed,
-            'skiped' => $this->skiped,
+            'skipped' => $this->skipped,
         ];
     }
 }
