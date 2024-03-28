@@ -1,4 +1,7 @@
 rondal: 
+  all:
+    track: true
+
   scrapers:
     App\Scraper\FranprixScraper: 'franprix'
     App\Scraper\MonoprixScraper: 'monoprix'

@@ -4,7 +4,9 @@ namespace App\Scraper;
 
 use App\Entity\Provider;
 use App\Event\Scraping\ScrapingFailedEvent;
+use App\Event\Scraping\ScrapingSkipedEvent;
 use App\Event\Scraping\ScrapingSuccessedEvent;
+use App\Scraper\Evaluator\ScrapEvaluator;
 use App\Scraper\Exceptions\ScrapingFailedException;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -14,11 +16,20 @@ abstract class AbstractProviderScraper implements ProviderScraperInterface
     public function __construct(
         private readonly Provider $provider,
         private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ScrapEvaluator $scrapEvaluator,
     ) {
     }
 
     public function scrape(ResponseInterface $response): array
     {
+        if (false === $this->scrapEvaluator->evaluate($this->provider)) {
+            $this->eventDispatcher->dispatch(new ScrapingSkipedEvent($this->provider));
+
+            dump('skip');
+
+            return [];
+        }
+
         try {
             $price = $this->doScrape($response);
 

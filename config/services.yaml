@@ -27,3 +27,8 @@ services:
 
     App\Services\Interfaces\ProviderCallerInterface:
         class: App\Services\ProviderCaller
+
+    App\EventSubscriber\PopulateStatsSubscriber:
+        arguments:
+            $statsExporter: '@App\Services\StatsExporter'
+            $scrapEvaluator: '@rondal.scraper_evaluator'

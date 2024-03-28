@@ -4,6 +4,7 @@ namespace App\Scraper\Factory;
 
 use App\Repository\ProviderRepository;
 use App\Scraper\AbstractProviderScraper;
+use App\Scraper\Evaluator\ScrapEvaluator;
 use App\Scraper\Exceptions\UnsupportedScraperExecption;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -16,6 +17,7 @@ class ScraperFactory
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly ProviderRepository $providerRepository,
+        private readonly ScrapEvaluator $scrapEvaluator,
     ) {
     }
 
@@ -24,7 +26,7 @@ class ScraperFactory
      *
      * @param class-string<T> $scraperClass
      */
-    public function create(string $scraperClass, string $providerName): AbstractProviderScraper
+    public function create(string $scraperClass, string $providerName, bool $track = false): AbstractProviderScraper
     {
         if (!class_exists($scraperClass) || !is_subclass_of($scraperClass, AbstractProviderScraper::class)) {
             throw new \InvalidArgumentException(sprintf('The class "%s either not exist or is not a subclass of "%s".', $scraperClass, AbstractProviderScraper::class));
@@ -36,6 +38,13 @@ class ScraperFactory
             throw new UnsupportedScraperExecption(sprintf('There are not provider with the name "%s".', $providerName));
         }
 
-        return new $scraperClass($provider, $this->eventDispatcher);
+        $args = [$provider, $this->eventDispatcher];
+
+        if ($track) {
+            $this->scrapEvaluator->track($provider);
+            $args[] = $this->scrapEvaluator;
+        }
+
+        return new $scraperClass(...$args);
     }
 }
