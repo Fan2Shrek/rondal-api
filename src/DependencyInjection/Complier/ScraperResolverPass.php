@@ -24,6 +24,7 @@ class ScraperResolverPass implements CompilerPassInterface
                 new TaggedIterator('rondal.scraper'),
             ]);
 
+        $container->setAlias(ScraperResolverInterface::class, ScraperResolver::class);
         $container->setDefinition(ScraperResolverInterface::class, $definition);
     }
 }
