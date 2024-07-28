@@ -29,5 +29,6 @@ class ProviderFixtures extends Fixture
     {
         yield ['name' => 'Franprix', 'url' => 'https://www.franprix.fr', 'adapter' => '/courses/p/{name}-{id}'];
         yield ['name' => 'Monoprix', 'url' => 'https://courses.monoprix.fr', 'adapter' => '/products/{id}/details'];
+        yield ['name' => 'Carrefour', 'url' => 'https://www.carrefour.fr', 'adapter' => '/p/{name}-{id}'];
     }
 }
