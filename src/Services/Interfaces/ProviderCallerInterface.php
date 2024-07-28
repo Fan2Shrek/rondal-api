@@ -8,7 +8,13 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 interface ProviderCallerInterface
 {
-    public function call(string $url): ResponseInterface;
+    /**
+     * @param RequestPreparerInterface[] $requestPreparer
+     */
+    public function call(string $url, array $requestPreparer = []): ResponseInterface;
 
-    public function callProduct(Product $product, ProviderAdapter $provider): ResponseInterface;
+    /**
+     * @param RequestPreparerInterface[] $requestPreparer
+     */
+    public function callProduct(Product $product, ProviderAdapter $provider, array $requestPreparer = []): ResponseInterface;
 }

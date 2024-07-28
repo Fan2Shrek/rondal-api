@@ -27,7 +27,8 @@ class ProviderFixtures extends Fixture
      */
     private function getData(): iterable
     {
-        yield ['name' => 'Franprix', 'url' => 'https://www.franprix.fr', 'adapter' => '/courses/p/{name}-{id}'];
-        yield ['name' => 'Monoprix', 'url' => 'https://courses.monoprix.fr', 'adapter' => '/products/{id}/details'];
+        // yield ['name' => 'Franprix', 'url' => 'https://www.franprix.fr', 'adapter' => '/courses/p/{name}-{id}'];
+        // yield ['name' => 'Monoprix', 'url' => 'https://courses.monoprix.fr', 'adapter' => '/products/{id}/details'];
+        yield ['name' => 'Intermarché', 'url' => 'https://www.intermarche.com', 'adapter' => '/produit/{name}/{code}'];
     }
 }

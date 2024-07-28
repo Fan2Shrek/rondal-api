@@ -13,6 +13,7 @@ class UrlAdapter implements UrlAdapterInterface
         'product' => 'originalName',
         'id' => '|-id',
         'name' => '|-name',
+        'code' => '|-code',
     ];
 
     private Provider $currentProvider;

@@ -14,9 +14,15 @@ class ProductFixture extends Fixture
         $ketchup = new Product('Ketchup', 'ketchup');
 
         $data = new ProductData($ketchup);
+
         $data->getInformations()->set('franprix-id', 99145086);
         $data->getInformations()->set('franprix-name', 'ketchup-flacon-top-down');
+
         $data->getInformations()->set('monoprix-id', 'MPX_3266125');
+
+        $data->getInformations()->set('intermarché-name', 'mayonnaise-de-dijon');
+        $data->getInformations()->set('intermarché-code', '8711200548002');
+
         $manager->persist($data);
 
         $mayo = new Product('mayonnaise', 'mayonnaise');
@@ -25,7 +31,12 @@ class ProductFixture extends Fixture
         $data = new ProductData($mayo);
         $data->getInformations()->set('franprix-name', 'mayonnaise-de-dijon-flacon-top-down');
         $data->getInformations()->set('franprix-id', 99034507);
+
         $data->getInformations()->set('monoprix-id', 'MPX_3875532');
+
+        $data->getInformations()->set('intermarché-name', 'tomato-ketchup');
+        $data->getInformations()->set('intermarché-code', '0000087157277');
+        
         $manager->persist($data);
 
         $manager->flush();

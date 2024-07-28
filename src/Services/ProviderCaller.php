@@ -19,12 +19,18 @@ class ProviderCaller implements ProviderCallerInterface
     ) {
     }
 
-    public function call(string $url): ResponseInterface
+    public function call(string $url, array $requestPreparer = []): ResponseInterface
     {
-        return $this->httpClient->request('GET', $url);
+        $options  = [];
+
+        foreach ($requestPreparer as $preparer) {
+            $options = array_merge($preparer->prepareRequest($url));
+        }
+
+        return $this->httpClient->request('GET', $url, $options);
     }
 
-    public function callProduct(Product $product, ProviderAdapter $providerAdapter): ResponseInterface
+    public function callProduct(Product $product, ProviderAdapter $providerAdapter, array $requestPreparer = []): ResponseInterface
     {
         $product = $this->productDataRepository->findOneByProduct($product);
 
@@ -34,6 +40,6 @@ class ProviderCaller implements ProviderCallerInterface
 
         $url = $this->urlAdapter->adaptFullUrl($providerAdapter, $product);
 
-        return $this->call($url);
+        return $this->call($url, $requestPreparer);
     }
 }

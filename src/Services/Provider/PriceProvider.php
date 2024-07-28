@@ -9,6 +9,7 @@ use App\Repository\ProviderAdapterRepository;
 use App\Repository\Redis\PriceInfoRepository;
 use App\Scraper\Resolver\ScraperResolverInterface;
 use App\Services\Interfaces\ProviderCallerInterface;
+use App\Services\Interfaces\RequestPreparerInterface;
 use App\Services\Provider\Exception\ProviderScraperNotFound;
 
 class PriceProvider implements PriceProviderInterface
@@ -47,7 +48,7 @@ class PriceProvider implements PriceProviderInterface
             throw new ProviderScraperNotFound(sprintf('No scraper found for provider %s', $providerAdapter->getProvider()->getName()));
         }
 
-        $response = $this->providerCaller->callProduct($product, $providerAdapter);
+        $response = $this->providerCaller->callProduct($product, $providerAdapter, $scraper instanceof RequestPreparerInterface ? [$scraper] : []);
 
         $prices = $scraper->scrape($response);
 
