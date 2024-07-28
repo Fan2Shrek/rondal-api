@@ -20,4 +20,14 @@ final class ProviderAdapterRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ProviderAdapter::class);
     }
+
+    public function findByProviderName(string $providerName): ?ProviderAdapter
+    {
+        return $this->createQueryBuilder('pa')
+            ->join('pa.provider', 'p')
+            ->where('p.name = :providerName')
+            ->setParameter('providerName', $providerName)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

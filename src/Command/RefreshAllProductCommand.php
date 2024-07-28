@@ -28,7 +28,8 @@ class RefreshAllProductCommand extends Command
     {
         $this
             ->setDescription('Refresh all product prices')
-            ->addOption('stats', null, InputOption::VALUE_NEGATABLE, 'Display stats', true);
+            ->addOption('stats', null, InputOption::VALUE_NEGATABLE, 'Display stats', true)
+            ->addOption('provider', '-p', InputOption::VALUE_OPTIONAL, 'Scrapper only given provider', null);
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -37,8 +38,7 @@ class RefreshAllProductCommand extends Command
 
         foreach ($this->productRepository->getAllActiveProduct() as $product) {
             $io->section(sprintf('Asking for %s...', $product->getName()));
-
-            $this->bus->dispatch(new RefreshProductPriceCommand($product));
+            $this->bus->dispatch(new RefreshProductPriceCommand($product, $input->getOption('provider')));
         }
 
         if ($input->getOption('stats')) {

@@ -8,6 +8,7 @@ class RefreshProductPriceCommand
 {
     public function __construct(
         public readonly Product $product,
+        public readonly ?string $providerName = null,
     ) {
     }
 }
